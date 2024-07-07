@@ -3,12 +3,35 @@ async function loadPhotographerData() {
     try {
         
         const photographerId = getPhotographerIdFromURL();
-      
-
         const {photographer, mediasPhoto } = await fetchPhotographerById(photographerId);
 
         // Afficher les informations du photographe
-        displayPhotographerInfos(photographer, mediasPhoto);
+        displayPhotographerInfos(photographer);
+        displayPhotographerWorks(photographer, mediasPhoto)
+
+      
+        document.querySelector(`#sortWorks`).addEventListener(`change`, function () {
+            const sortValue = this.value
+            console.log("changement", sortValue)
+
+            let sortedMedias;
+            switch (sortValue) {
+                case `popularity`:
+                sortedMedias = sortByPopularity(mediasPhoto)
+                    break
+                
+                case `date`:
+                    sortedMedias = sortByDate(mediasPhoto)
+                    break
+                
+                case `title`:
+                    sortedMedias = sortByTitle(mediasPhoto)
+                    break
+                default:
+                    sortedMedias = mediasPhoto
+            }
+            displayPhotographerWorks(photographer, sortedMedias)
+        })
     } catch (error) {
         console.error('Erreur lors du chargement des données du photographe:', error);
     }
@@ -40,24 +63,35 @@ async function fetchPhotographerById(photographerId) {
     }
   
 }
-  
+
+function sortByPopularity(mediasPhoto) {
+    return mediasPhoto.sort((a, b) => b.likes - a.likes)
+}
+
+function sortByDate(mediasPhoto) {
+    return mediasPhoto.sort((a, b) => new Date(b.date) - new Date(a.date))
+}
+
+function sortByTitle(mediasPhoto) {
+    return mediasPhoto.sort((a, b) => a.title.localeCompare(b.title))
+}
 
 // Fonction pour afficher les informations du photographe
-function displayPhotographerInfos(photographer, mediasPhoto) {
-    console.log(mediasPhoto)
-    console.log(photographer)
+function displayPhotographerInfos(photographer) {
     if (!photographer) {
         console.error('Aucun photographe trouvé avec cet ID.');
         return;
     }
+    const photographerHeader = document.querySelector(`.photograph-header`);
+    photographerHeader.innerHTML = '';
     const photographerInfosPart = document.createElement('div')
     photographerInfosPart.classList.add('photographerInfos')
     const photographerPhotoContact = document.createElement('div')
     photographerPhotoContact.classList.add('photograph-photoContact')
     const photographContact = document.querySelector('.contact_button')
     const photographerPicture = `assets/photographers/${photographer.portrait}`
-    const photographerHeader = document.querySelector(`.photograph-header`);
-    const photographerName = document.createElement('h1')  
+    
+    const photographerName = document.createElement('h1')
     photographerName.classList.add(`photographer-photo`)
     photographerName.innerText = photographer.name
     const photographerCity = document.createElement('p')
@@ -77,11 +111,16 @@ function displayPhotographerInfos(photographer, mediasPhoto) {
     photographerInfosPart.appendChild(photographerCity)
     photographerInfosPart.appendChild(photographerTagLine)
     
-    //photographer's works
+}
+
+function displayPhotographerWorks(photographer, mediasPhoto){
+        //photographer's works
+        const photosGallery = document.querySelector(`.photographerWorks`)
+        photosGallery.innerHTML = '';
     if (mediasPhoto.length > 0){
      mediasPhoto.forEach(media => {
-         const photographerWorks = `assets/images/${encodeURIComponent(photographer.name)}-photos/${encodeURIComponent(media.image)}`
-         const photosGallery = document.querySelector(`.photographerWorks`)
+         const photographerWorks = `assets/images/${photographer.name}-photos/${media.image}`
+         
          const photosDiv = document.createElement(`div`)
         const gallery = document.createElement(`img`)
         gallery.classList.add('photographers-works')
@@ -90,15 +129,13 @@ function displayPhotographerInfos(photographer, mediasPhoto) {
          photoName.innerText = `${media.title}`
          const photoLike = document.createElement(`p`)
          photoLike.innerText = `${media.likes}`
-         
-         
-
+       
          photosGallery.appendChild(photosDiv)
          photosDiv.appendChild(gallery)
          photosDiv.appendChild(photoName)
          photosDiv.appendChild(photoLike)
       
-         
+      
     })
    
     } else {
@@ -106,4 +143,6 @@ function displayPhotographerInfos(photographer, mediasPhoto) {
     }
 
 }
+
+
 
