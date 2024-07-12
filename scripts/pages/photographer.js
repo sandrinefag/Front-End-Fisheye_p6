@@ -1,14 +1,23 @@
 // //Mettre le code JavaScript lié à la page photographer.html
+let mediasPhoto = []
+let photographer = null
+let currentIndex = 0
+const lightbox = document.querySelector(`.lightbox`)
 async function loadPhotographerData() {
     try {
         
         const photographerId = getPhotographerIdFromURL();
-        const {photographer, mediasPhoto } = await fetchPhotographerById(photographerId);
+        // const {photographer, mediasPhoto } = await fetchPhotographerById(photographerId);
+        const data = await fetchPhotographerById(photographerId);
 
+        photographer = data.photographer
+        mediasPhoto = data.mediasPhoto
+     
         // Afficher les informations du photographe
         displayPhotographerInfos(photographer);
         displayPhotographerWorks(photographer, mediasPhoto)
-
+        
+        
       
         document.querySelector(`#sortWorks`).addEventListener(`change`, function () {
             const sortValue = this.value
@@ -82,67 +91,127 @@ function displayPhotographerInfos(photographer) {
         console.error('Aucun photographe trouvé avec cet ID.');
         return;
     }
-    const photographerHeader = document.querySelector(`.photograph-header`);
-    photographerHeader.innerHTML = '';
+     const photographerHeader = document.querySelector(`.photograph-header`);
     const photographerInfosPart = document.createElement('div')
     photographerInfosPart.classList.add('photographerInfos')
+
     const photographerPhotoContact = document.createElement('div')
     photographerPhotoContact.classList.add('photograph-photoContact')
-    const photographContact = document.querySelector('.contact_button')
+
+    const photographContactBtn = document.querySelector(`#contactHeaderBtn`)
+  
     const photographerPicture = `assets/photographers/${photographer.portrait}`
     
     const photographerName = document.createElement('h1')
     photographerName.classList.add(`photographer-photo`)
     photographerName.innerText = photographer.name
+
     const photographerCity = document.createElement('p')
     photographerCity.innerText = `${photographer.city}, ${photographer.country}`
+
     const photographerTagLine = document.createElement('p')
     photographerTagLine.innerText = photographer.tagline
+
     const photographerPhoto = document.createElement('img')
     photographerPhoto.classList.add('photographerPhoto')
     photographerPhoto.setAttribute("src", photographerPicture)
 
    
-    photographerHeader.appendChild(photographerPhotoContact)
-    photographerPhotoContact.appendChild(photographerPhoto)
-    photographerPhotoContact.appendChild(photographContact)
     photographerHeader.appendChild(photographerInfosPart)
+    photographerHeader.appendChild(photographerPhotoContact)
     photographerInfosPart.appendChild(photographerName)
     photographerInfosPart.appendChild(photographerCity)
     photographerInfosPart.appendChild(photographerTagLine)
-    
+    photographerPhotoContact.appendChild(photographContactBtn)
+    photographerPhotoContact.appendChild(photographerPhoto)  
 }
 
-function displayPhotographerWorks(photographer, mediasPhoto){
-        //photographer's works
-        const photosGallery = document.querySelector(`.photographerWorks`)
-        photosGallery.innerHTML = '';
-    if (mediasPhoto.length > 0){
-     mediasPhoto.forEach(media => {
-         const photographerWorks = `assets/images/${photographer.name}-photos/${media.image}`
-         
-         const photosDiv = document.createElement(`div`)
-        const gallery = document.createElement(`img`)
-        gallery.classList.add('photographers-works')
-        gallery.setAttribute("src", photographerWorks)
-         const photoName = document.createElement('p')
-         photoName.innerText = `${media.title}`
-         const photoLike = document.createElement(`p`)
-         photoLike.innerText = `${media.likes}`
+function displayPhotographerWorks(photographer, mediasPhoto) {
+    //photographer's works
+    const photosGallery = document.querySelector(`.photographerWorks`)
+    photosGallery.innerHTML = '';
+    
+
+    if (mediasPhoto.length > 0) {
+        mediasPhoto.forEach((media, index) => {
+            const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`
        
-         photosGallery.appendChild(photosDiv)
-         photosDiv.appendChild(gallery)
-         photosDiv.appendChild(photoName)
-         photosDiv.appendChild(photoLike)
-      
-      
-    })
+            const photosDiv = document.createElement(`div`)
+            photosDiv.classList.add(`media-container`)
+
    
+            const mediaElement = media.image ? document.createElement(`img`) : document.createElement(`video`)
+            mediaElement.classList.add('photographers-works')
+            mediaElement.setAttribute("src", photographerWorksPath)
+            const photoName = document.createElement('p')
+            photoName.innerText = `${media.title}`
+            const photoLike = document.createElement(`p`)
+            photoLike.innerText = `${media.likes}`
+       
+            photosGallery.appendChild(photosDiv)
+       
+            photosDiv.appendChild(mediaElement)
+            photosDiv.appendChild(photoName)
+            photosDiv.appendChild(photoLike)
+
+            mediaElement.addEventListener(`click`, () => {
+                let currentIndex = index
+                displayMediaInLightBox(mediasPhoto[currentIndex], photographer)
+                console.log(displayMediaInLightBox(mediasPhoto[currentIndex]))
+            })       
+         })
+                
     } else {
-        console.log('no media found for this photographer')
+    console.log('no media found for this photographer')
+    }
+
+
+}
+
+function displayMediaInLightBox(media, photographer) {
+   
+    const lightboxImg = document.querySelector(`.lightbox__img`)
+    const lightboxVideo = document.querySelector(`.lightbox__video`)
+    
+    if (!media || ! photographer) {
+        console.error('Erreur : le média est undefined');
+        return;
+    }
+   
+    
+    const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
+    lightbox.style.display = `block`
+
+    if (media.image) {
+        lightboxImg.src = photographerWorksPath
+        lightboxImg.style.display = `block`
+        lightboxVideo.style.display = `none`
+    
+    } else {
+        lightboxImg.style.display = `none`
+        lightboxVideo.style.display = `block`
+        lightboxVideo.src = photographerWorksPath
     }
 
 }
 
+ const btnNext = document.querySelector(`.lightbox__next`)
+             
+    btnNext.addEventListener(`click`, () => {
+        currentIndex = (currentIndex + 1) % mediasPhoto.length
+        displayMediaInLightBox(mediasPhoto[currentIndex], photographer)
+       
+    })
 
+    document.querySelector('.lightbox__prev').addEventListener('click', () => {
+        if (mediasPhoto.length > 0) {
+            currentIndex = (currentIndex - 1 + mediasPhoto.length) % mediasPhoto.length;
+            displayMediaInLightBox(mediasPhoto[currentIndex], photographer);
+        }
+    })
+
+const closeBtn = document.querySelector(`.lightbox__close`)
+    closeBtn.addEventListener(`click`, () => {
+        lightbox.style.display = `none`
+    })
 

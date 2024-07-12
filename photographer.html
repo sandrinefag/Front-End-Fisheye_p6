@@ -13,7 +13,7 @@
     </header>
     <main id="main">
       <section class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <button class="contact_button" id="contactHeaderBtn" onclick="displayModal()">Contactez-moi</button>
       </section>
       <section class="photographerWorksSection">
         <label for="">Trier par:</label>
@@ -24,6 +24,15 @@
         </select>
         <div class="photographerWorks"></div>
       </section>
+      <div class="lightbox">
+        <button class="lightbox__close">Fermer</button>
+        <button class="lightbox__next">Suivant</button>
+        <button class="lightbox__prev">Précédent</button>
+        <div class="lightbox__container">
+          <img src="" alt="" class="lightbox__img">
+          <video controls class="lightbox__video"></video>
+        </div>
+      </div>
     </main>
     <div id="contact_modal">
 			<div class="modal">
@@ -33,10 +42,16 @@
         </header>
 				<form>
 					<div>
-						<label>Prénom</label>
-						<input />
+						<label for="firstName" id="firstName">Prénom</label>
+						<input type="text">
+            <label for="lastName">Nom</label>
+            <input type="text">
+            <label for="mail">E-Mail</label>
+            <input type="text">
+            <label for="msg">Votre message</label>
+            <input type="area">
 					</div>
-          <button class="contact_button">Envoyer</button>
+          <button class="contact_button" id="sendFormBtn">Envoyer</button>
 				</form>
 			</div>
 		</div>
