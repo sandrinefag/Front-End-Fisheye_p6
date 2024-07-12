@@ -8,8 +8,12 @@ function closeModal() {
     modal.style.display = "none";
 }
 
-const firstName = document.getElementById(`firstName`)
-console.log(firstName)
+const firstNameInput = document.getElementById(`firstNameInput`)
+const lastNameInput = document.getElementById(`lastNameInput`)
+const mailInput = document.getElementById(`mailInput`)
+const msgArea = document.getElementById(`msgArea`)
+const sendFormBtn = document.getElementById(`sendFormBtn`) 
+console.log(sendFormBtn)
 
 function checkUserName(userName) {
     let regexNames = new RegExp(
@@ -23,20 +27,59 @@ function checkedUserMail(userMail) {
 	return regexMail.test(userMail);
 }
 
-function checkMessage(nberOfLetter) {
-    let regexMsgLetters = "^[a-zA-Zç-]{10,1000}$"
-    return regexMsgLetters.test(nberOfLetter)
-    
+function checkMessageLength(userMsg) {
+    let regexMsgLetters = new RegExp ("^[a-zA-Zç-]{10,1000}$")
+    return regexMsgLetters.test(userMsg)   
 }
 
-firstName.addEventListener(`input`, (event) => {
+firstNameInput.addEventListener(`change`, (event) => {
     const userInput = event.target.value
-    const isValid = checkUserName(userInput)
-    if (isValid) {
+    console.log(`Prénom: ${userInput}` )
+    const nameIsItValid = checkUserName(userInput)
+    if (nameIsItValid) {
      console.log('is valid')
     } else {
         console.log('is not valid')
- }
+     }
+})
+
+lastNameInput.addEventListener(`change`, (event) => {
+    const userInput = event.target.value
+    console.log(`Nom: ${userInput}` )
+    const nameIsItValid = checkUserName(userInput)
+
+    if (nameIsItValid) {
+        console.log('is valid')
+    } else {
+        console.log('is not valid')
+    }
+})
+
+mailInput.addEventListener(`change`, (event) => {
+    const userInput = event.target.value
+    console.log(`Mail: ${userInput}`)
+    mailIsItValid = checkedUserMail(userInput)
+
+    if (mailIsItValid) {
+        console.log('is valid')
+    } else {
+        console.log('is not valid')
+    }
+})
+
+msgArea.addEventListener(`change`, (event) => {
+    const userInput = event.target.value
+    console.log(`message: ${userInput}`)
+    msgLenghtIsItValid = checkMessageLength(userInput)
+    if (msgLenghtIsItValid) {
+        console.log('is valid')
+    } else {
+        console.log('is not valid')
+    }
+})
+
+sendFormBtn.addEventListener(`click`, (event) => {
+    event.preventDefault()
 })
  
 
