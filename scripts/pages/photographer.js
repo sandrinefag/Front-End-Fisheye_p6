@@ -126,16 +126,20 @@ function displayPhotographerInfos(photographer) {
     photographerPhotoContact.appendChild(photographerPhoto)  
 }
 
+
+
+
+
+
 function displayPhotographerWorks(photographer, mediasPhoto) {
     //photographer's works
     const photosGallery = document.querySelector(`.photographerWorks`)
     photosGallery.innerHTML = '';
     
-
     if (mediasPhoto.length > 0) {
         mediasPhoto.forEach((media, index) => {
             const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`
-       
+            const iconLikePath = `../assets/icons/heart.png`
             const photosDiv = document.createElement(`div`)
             photosDiv.classList.add(`media-container`)
 
@@ -143,23 +147,56 @@ function displayPhotographerWorks(photographer, mediasPhoto) {
             const mediaElement = media.image ? document.createElement(`img`) : document.createElement(`video`)
             mediaElement.classList.add('photographers-works')
             mediaElement.setAttribute("src", photographerWorksPath)
+            const photoDetailsDiv = document.createElement(`div`)
+            photoDetailsDiv.classList.add(`photoDetailsDiv`)
             const photoName = document.createElement('p')
             photoName.innerText = `${media.title}`
-            const photoLike = document.createElement(`p`)
-            photoLike.innerText = `${media.likes}`
+            const nberOfPhotoLike = document.createElement(`p`)
+            nberOfPhotoLike.innerText = `${media.likes}`
+            nberOfPhotoLike.classList.add(`nberOfLike`)
+            const iconLike = document.createElement(`img`)
+            iconLike.setAttribute("src", iconLikePath)
+            iconLike.classList.add(`iconLike`)
+            const likeDiv = document.createElement(`div`)
+            likeDiv.classList.add(`likeDiv`)
        
             photosGallery.appendChild(photosDiv)
        
             photosDiv.appendChild(mediaElement)
-            photosDiv.appendChild(photoName)
-            photosDiv.appendChild(photoLike)
+            photosDiv.appendChild(photoDetailsDiv)
+            photoDetailsDiv.appendChild(likeDiv)
+            photoDetailsDiv.appendChild(photoName)
+            likeDiv.appendChild(nberOfPhotoLike)
+            likeDiv.appendChild(iconLike)
 
             mediaElement.addEventListener(`click`, () => {
                 let currentIndex = index
                 displayMediaInLightBox(mediasPhoto[currentIndex], photographer)
                 console.log(displayMediaInLightBox(mediasPhoto[currentIndex]))
             })       
-         })
+        })
+
+        const heartLike = document.querySelectorAll(`.iconLike`)
+        const nberLikePhoto = document.querySelectorAll(`.nberOfLike`)
+       console.log(nberLikePhoto)
+       
+        for (let i = 0; i < heartLike.length; i++){
+        heartLike[i].addEventListener(`click`, (event) => {
+            heartIconClicked = event.target
+            const test = heartIconClicked.previousElementSibling
+            let currentLikes = parseInt(test.innerText)
+            if (!heartLike[i].classList.contains(`liked`)) {
+                currentLikes += 1
+                test.innerText = currentLikes
+            heartLike[i].classList.add(`liked`)
+            } else {
+                heartLike[i].classList.remove(`liked`)
+                currentLikes -= 1
+                test.innerText = currentLikes  
+            }
+        })
+        }
+
                 
     } else {
     console.log('no media found for this photographer')
@@ -178,7 +215,6 @@ function displayMediaInLightBox(media, photographer) {
         return;
     }
    
-    
     const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
     lightbox.style.display = `block`
 
