@@ -135,11 +135,31 @@ function displayPhotographerWorks(photographer, mediasPhoto) {
     //photographer's works
     const photosGallery = document.querySelector(`.photographerWorks`)
     photosGallery.innerHTML = '';
+   
     
     if (mediasPhoto.length > 0) {
+        const iconLikeBrownPath = `../assets/icons/heart.png`
+        const iconLikeBlackPath = `../assets/icons/black-heart-solid.svg`
+
+        const nberTotalOfLikesDiv = document.createElement(`div`)
+        nberTotalOfLikesDiv.classList.add(`nberTotalOfLikesDiv`)
+
+        const totalLikesDiv = document.createElement(`div`)
+        const nberTotalOfLikeCounter = document.createElement(`p`)
+        nberTotalOfLikeCounter.classList.add(`counterOfTotalLikes`)
+
+        const nberLikeTotalIcon = document.createElement(`img`)
+        nberLikeTotalIcon.setAttribute("src", iconLikeBlackPath)
+
+        const pricePerDay = document.createElement(`p`)
+        pricePerDay.innerText = `${photographer.price}€/jour`
+
+        let totalLikes = 0;
+
         mediasPhoto.forEach((media, index) => {
+            // const nberLikePhoto = document.querySelectorAll(`.nberOfLike`)
             const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`
-            const iconLikePath = `../assets/icons/heart.png`
+            
             const photosDiv = document.createElement(`div`)
             photosDiv.classList.add(`media-container`)
 
@@ -147,62 +167,76 @@ function displayPhotographerWorks(photographer, mediasPhoto) {
             const mediaElement = media.image ? document.createElement(`img`) : document.createElement(`video`)
             mediaElement.classList.add('photographers-works')
             mediaElement.setAttribute("src", photographerWorksPath)
+
             const photoDetailsDiv = document.createElement(`div`)
             photoDetailsDiv.classList.add(`photoDetailsDiv`)
+
             const photoName = document.createElement('p')
             photoName.innerText = `${media.title}`
+
             const nberOfPhotoLike = document.createElement(`p`)
             nberOfPhotoLike.innerText = `${media.likes}`
             nberOfPhotoLike.classList.add(`nberOfLike`)
+
             const iconLike = document.createElement(`img`)
-            iconLike.setAttribute("src", iconLikePath)
+            iconLike.setAttribute("src", iconLikeBrownPath)
             iconLike.classList.add(`iconLike`)
+
             const likeDiv = document.createElement(`div`)
             likeDiv.classList.add(`likeDiv`)
-       
+
+            totalLikes += parseInt(nberOfPhotoLike.innerText)
+            nberTotalOfLikeCounter.innerText = totalLikes
+            console.log(totalLikes)
+    
+
             photosGallery.appendChild(photosDiv)
-       
+          
             photosDiv.appendChild(mediaElement)
             photosDiv.appendChild(photoDetailsDiv)
             photoDetailsDiv.appendChild(likeDiv)
             photoDetailsDiv.appendChild(photoName)
             likeDiv.appendChild(nberOfPhotoLike)
             likeDiv.appendChild(iconLike)
+            nberTotalOfLikesDiv.appendChild(totalLikesDiv)
+            totalLikesDiv.appendChild(nberTotalOfLikeCounter)
+            totalLikesDiv.appendChild(nberLikeTotalIcon)
+            nberTotalOfLikesDiv.appendChild(pricePerDay)
+              photosGallery.appendChild(nberTotalOfLikesDiv)
 
             mediaElement.addEventListener(`click`, () => {
                 let currentIndex = index
                 displayMediaInLightBox(mediasPhoto[currentIndex], photographer)
                 console.log(displayMediaInLightBox(mediasPhoto[currentIndex]))
-            })       
+            })
+            
         })
 
         const heartLike = document.querySelectorAll(`.iconLike`)
-        const nberLikePhoto = document.querySelectorAll(`.nberOfLike`)
-       console.log(nberLikePhoto)
        
-        for (let i = 0; i < heartLike.length; i++){
-        heartLike[i].addEventListener(`click`, (event) => {
-            heartIconClicked = event.target
-            const test = heartIconClicked.previousElementSibling
-            let currentLikes = parseInt(test.innerText)
-            if (!heartLike[i].classList.contains(`liked`)) {
-                currentLikes += 1
-                test.innerText = currentLikes
-            heartLike[i].classList.add(`liked`)
-            } else {
-                heartLike[i].classList.remove(`liked`)
-                currentLikes -= 1
-                test.innerText = currentLikes  
-            }
-        })
-        }
+        for (let i = 0; i < heartLike.length; i++) {
+            heartLike[i].addEventListener(`click`, (event) => {
+                 heartIconClicked = event.target
+                let test = heartIconClicked.previousElementSibling
+                let currentLikes = parseInt(test.innerText)
 
-                
+                if (!heartLike[i].classList.contains(`liked`)) {
+                    currentLikes += 1
+                    totalLikes += 1
+                    test.innerText = currentLikes
+                    heartLike[i].classList.add(`liked`)
+                } else {
+                    currentLikes -= 1
+                   totalLikes -= 1
+                    test.innerText = currentLikes
+                    heartLike[i].classList.remove(`liked`)
+                }
+                nberTotalOfLikeCounter.innerText = totalLikes
+            })
+        }       
     } else {
-    console.log('no media found for this photographer')
+        console.log('no media found for this photographer')
     }
-
-
 }
 
 function displayMediaInLightBox(media, photographer) {
