@@ -9,14 +9,14 @@
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="index.html"><img src="assets/images/logo.png" class="logo" /></a>
     </header>
     <main id="main">
       <section class="photograph-header">
         <button class="contact_button" id="contactHeaderBtn" onclick="displayModal()">Contactez-moi</button>
       </section>
       <section class="photographerWorksSection">
-        <label for="">Trier par:</label>
+        <label for="sort" id="sort">Trier par:</label>
         <select name="sortWorks" id="sortWorks">
           <option value="popularity" id="sortPopularity">Popularité</option>
           <option value="date" id="sortDate">Date</option>
@@ -25,9 +25,9 @@
         <div class="photographerWorks"></div>
       </section>
       <div class="lightbox">
-        <button class="lightbox__close">Fermer</button>
-        <button class="lightbox__next">Suivant</button>
-        <button class="lightbox__prev">Précédent</button>
+        <button class="lightbox__close"></button>
+        <button class="lightbox__next"></button>
+        <button class="lightbox__prev"></button>
         <div class="lightbox__container">
           <img src="" alt="" class="lightbox__img">
           <video controls class="lightbox__video"></video>
@@ -49,7 +49,7 @@
             <label for="mailInput">E-Mail</label>
             <input type="text" id="mailInput">
             <label for="msgArea">Votre message</label>
-            <input type="area" id="msgArea">
+            <textarea type="area" id="msgArea" cols="86" rows="10"></textarea>
 					</div>
           <button class="contact_button" id="sendFormBtn">Envoyer</button>
 				</form>

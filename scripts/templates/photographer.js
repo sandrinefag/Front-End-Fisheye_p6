@@ -45,5 +45,6 @@ function photographerTemplate(data) {
         photographerInfo.appendChild(photographerPrice);
         return (articleLink);
     }
-    return { name, picture, getUserCardDOM }
+    return { getUserCardDOM }
 }
+
