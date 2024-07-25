@@ -1,12 +1,10 @@
 // //Mettre le code JavaScript lié à la page photographer.html
-// //Mettre le code JavaScript lié à la page photographer.html
-import { displayPhotographerInfos, displayPhotographerWorks } from "../templates/photographerGallery.js"
+import { displayPhotographerInfos, displayPhotographerWorks, photographerNameModal } from "../templates/photographerGallery.js"
 import { lightboxBtnControls } from "./lightbox.js"
 
 
 let mediasPhoto = []
 let photographer = ""
-// let currentIndex = 0
 const lightbox = document.querySelector(`.lightbox`)
 
 
@@ -26,7 +24,7 @@ async function loadPhotographerData() {
         displayPhotographerWorks(photographer, mediasPhoto)
         lightboxBtnControls(mediasPhoto, photographer)
         like()
-        
+        photographerNameModal(photographer)
     } catch (error) {
         console.error(`Erreur lors du chargement des données du photographe:`, error);
     }
@@ -73,7 +71,8 @@ function gallerySort(){
                 default:
                     sortedMedias = mediasPhoto
             }
-            displayPhotographerWorks(photographer, sortedMedias)
+     displayPhotographerWorks(photographer, sortedMedias)
+     like()
         })
 }
 gallerySort()
@@ -89,7 +88,7 @@ function getPhotographerIdFromURL() {
 function sortByPopularity(mediasPhoto) {
     const sortedMedias = mediasPhoto.slice().sort((a, b) => b.likes - a.likes)
     displayPhotographerWorks(photographer, sortedMedias);
-   like(sortedMedias);
+   like();
     return sortedMedias
    
 }
@@ -97,21 +96,18 @@ function sortByPopularity(mediasPhoto) {
 function sortByDate(mediasPhoto) {
     const sortedMedias = mediasPhoto.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
     displayPhotographerWorks(photographer, sortedMedias);
-    like(sortedMedias);
+    like();
     return sortedMedias
 }
 
 function sortByTitle(mediasPhoto) {
     const sortedMedias = mediasPhoto.slice().sort((a, b) => a.title.localeCompare(b.title))
     displayPhotographerWorks(photographer, sortedMedias);
-    like(sortedMedias);
+    like();
     return sortedMedias
 }
 
 //------------------------------------------------
-
-
-
 export function like() {
    
     const heartLike = document.querySelectorAll(`.iconLike`)
@@ -138,9 +134,6 @@ export function like() {
                 }
 
                 nberTotalOfLikeCounter.innerText = totalLikes
-                // sortByDate(mediasPhoto)
-                // sortByPopularity(mediasPhoto)
-                // sortByTitle(mediasPhoto)
             })  
         }
     } else {

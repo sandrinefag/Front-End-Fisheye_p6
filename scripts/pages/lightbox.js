@@ -1,12 +1,17 @@
-
+    const body = document.querySelector(`body`)
 export function displayMediaInLightBox(media, photographer) {
     const lightbox = document.querySelector(`.lightbox`)
      const lightboxImg = document.querySelector(`.lightbox__img`)
-     const lightboxVideo = document.querySelector(`.lightbox__video`)
+    const lightboxVideo = document.querySelector(`.lightbox__video`)
+    const lightboxTitlePhoto = document.querySelector(`.lightbox__titlePhoto`)
+   
     
     const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
 
-     lightbox.style.display = `block`
+    lightbox.style.display = `flex`
+    body.classList.add(`body-opaque`)
+
+    
      if (media.image) {
          lightboxImg.src = photographerWorksPath
          lightboxImg.style.display = `block`
@@ -17,18 +22,15 @@ export function displayMediaInLightBox(media, photographer) {
          lightboxVideo.style.display = `block`
          lightboxVideo.src = photographerWorksPath
      }
-
+lightboxTitlePhoto.innerText = `${media.title}`
 }
  
  
  export function lightboxBtnControls(mediasPhoto, photographer){
      const lightbox = document.querySelector(`.lightbox`)
+     const prevBtn = document.querySelector(`.lightbox__prev`)
+     console.log(prevBtn)
      let currentIndex = 0
-  
-     if (!Array.isArray(mediasPhoto) || mediasPhoto.length === 0) {
-        console.error('mediasPhoto n\'est pas un tableau valide ou est vide.');
-        return;
-    }
      
      document.querySelector(`.lightbox__next`).addEventListener(`click`, () => {
          currentIndex = (currentIndex + 1) % mediasPhoto.length
@@ -43,8 +45,23 @@ export function displayMediaInLightBox(media, photographer) {
      })
  
      document.querySelector(`.lightbox__close`).addEventListener(`click`, () => {
-         lightbox.style.display = "none"
+         lightbox.style.display = `none`
+       
      })
+     
+     document.addEventListener(`keydown`, (event) => {
+         const key = event.key; // La touche enfoncée
+         if (key === `ArrowLeft`) {
+            currentIndex = (currentIndex - 1 + mediasPhoto.length) % mediasPhoto.length;
+            displayMediaInLightBox(mediasPhoto[currentIndex], photographer);
+         } else if (key === `ArrowRight`) {
+            currentIndex = (currentIndex + 1) % mediasPhoto.length
+            displayMediaInLightBox(mediasPhoto[currentIndex], photographer)
+         } else if (key === `Escape`) {
+             lightbox.style.display = `none`
+        }
+      });
+
 }
 
 

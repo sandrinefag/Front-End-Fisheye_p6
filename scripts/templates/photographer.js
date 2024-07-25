@@ -6,17 +6,18 @@ function photographerTemplate(data) {
 
     function getUserCardDOM() {
         //creation d'une balise a href pour rendre l'article cliquable
-        const articleLink = document.createElement('a');
-        articleLink.setAttribute('href', `../photographer.html?id=${id}`);
+        const photographerPageLink = document.createElement('a');
+        photographerPageLink.setAttribute(`href`, `../photographer.html?id=${id}`);
         const article = document.createElement('article');
         
 
         //division en 2 de l'article. Une div qui contient la photo et nom du photographe. Et une autre qui contient le reste des infos de celui-ci
         //1ere partie
-        const idPhotographerPart = document.createElement('div');
-        idPhotographerPart.classList.add('photoNamePhotographer');
-        const img = document.createElement( 'img' );
-        img.setAttribute("src", picture)
+        const idPhotographerPart = document.createElement(`div`);
+        idPhotographerPart.classList.add(`photoNamePhotographer`);
+        const img = document.createElement(`img`);
+        img.setAttribute(`src`, picture)
+        img.setAttribute(`aria-label`, `photo du profile de ${name}`)
         const h2 = document.createElement( 'h2' );
         h2.textContent = name;
 
@@ -32,18 +33,28 @@ function photographerTemplate(data) {
         const photographerPrice = document.createElement('p');
         photographerPrice.classList.add('photographerPrice');
         photographerPrice.textContent = `${price}€ /jours`;
-        
-        
-        articleLink.appendChild(article);
-        article.appendChild(idPhotographerPart);
-        idPhotographerPart.appendChild(img);
+       
+
+        article.appendChild(photographerPageLink);
         article.appendChild(photographerInfo);
+
+        photographerPageLink.appendChild(idPhotographerPart);
         
+        idPhotographerPart.appendChild(img);
         idPhotographerPart.appendChild(h2);
+
         photographerInfo.appendChild(photographerTown);
         photographerInfo.appendChild(photographerTagLine);
         photographerInfo.appendChild(photographerPrice);
-        return (articleLink);
+
+       
+      
+       
+       
+        
+        
+       
+        return (article);
     }
     return { getUserCardDOM }
 }

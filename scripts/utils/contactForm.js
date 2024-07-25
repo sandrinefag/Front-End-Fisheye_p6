@@ -13,7 +13,7 @@ const lastNameInput = document.getElementById(`lastNameInput`)
 const mailInput = document.getElementById(`mailInput`)
 const msgArea = document.getElementById(`msgArea`)
 const sendFormBtn = document.getElementById(`sendFormBtn`) 
-console.log(sendFormBtn)
+
 
 function checkUserName(userName) {
     let regexNames = new RegExp(
@@ -28,7 +28,7 @@ function checkedUserMail(userMail) {
 }
 
 function checkMessageLength(userMsg) {
-    let regexMsgLetters = new RegExp ("^[a-zA-Zç-]{10,1000}$")
+    let regexMsgLetters = /^[a-zA-ZÀ-ÖØ-öøçéèêëàâîïôùûüÿç\s,.'-:;]{10,1000}$/
     return regexMsgLetters.test(userMsg)   
 }
 
@@ -37,49 +37,75 @@ firstNameInput.addEventListener(`change`, (event) => {
     console.log(`Prénom: ${userInput}` )
     const nameIsItValid = checkUserName(userInput)
     if (nameIsItValid) {
-     console.log('is valid')
+        firstNameInput.style.background = "green"
+        firstNameInput.style.color ="white"
     } else {
-        console.log('is not valid')
+        firstNameInput.style.background = "red"
+        firstNameInput.style.color ="white"
      }
 })
 
 lastNameInput.addEventListener(`change`, (event) => {
     const userInput = event.target.value
-    console.log(`Nom: ${userInput}` )
     const nameIsItValid = checkUserName(userInput)
 
     if (nameIsItValid) {
-        console.log('is valid')
+        lastNameInput.style.background = "green"
+        lastNameInput.style.color = "white"
     } else {
-        console.log('is not valid')
+        lastNameInput.style.background = "red"
+        lastNameInput.style.color = "white"
     }
 })
 
 mailInput.addEventListener(`change`, (event) => {
     const userInput = event.target.value
-    console.log(`Mail: ${userInput}`)
-    mailIsItValid = checkedUserMail(userInput)
+    const mailIsItValid = checkedUserMail(userInput)
 
     if (mailIsItValid) {
-        console.log('is valid')
+        mailInput.style.background = "green"
+         mailInput.style.color ="white"
     } else {
-        console.log('is not valid')
+        mailInput.style.background = "red"
+        mailInput.style.color ="white"
     }
 })
 
 msgArea.addEventListener(`change`, (event) => {
     const userInput = event.target.value
     console.log(`message: ${userInput}`)
-    msgLenghtIsItValid = checkMessageLength(userInput)
+    const msgLenghtIsItValid = checkMessageLength(userInput)
     if (msgLenghtIsItValid) {
-        console.log('is valid')
+        msgArea.style.background = "green"
+        msgArea.style.color = "white"
     } else {
-        console.log('is not valid')
+        msgArea.style.background = "red"
+        msgArea.style.color = "white"
     }
 })
 
+
+ 
+function checkedValidityOfForm() {
+    const isValidFirstName = checkUserName(firstNameInput.value);
+    const isValidLastName = checkUserName(lastNameInput.value);
+    const isValidMail = checkedUserMail(mailInput.value);
+    const isValidMsg = checkMessageLength(msgArea.value);
+
+    if (isValidFirstName && isValidLastName && isValidMail && isValidMsg) {
+        console.log('Formulaire valide');
+        console.log('Prénom:', firstNameInput.value);
+        console.log('Nom:', lastNameInput.value);
+        console.log('Mail:', mailInput.value);
+        console.log('Message:', msgArea.value);
+        lastNameInput.style.background = "green"
+        lastNameInput.style.color = "white"
+    } else {
+        console.log('Formulaire invalide');
+    }
+}
 sendFormBtn.addEventListener(`click`, (event) => {
     event.preventDefault()
-})
- 
+    checkedValidityOfForm()
 
+})    

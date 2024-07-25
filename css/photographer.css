@@ -5,10 +5,13 @@
 .photograph-header {
     background-color: #FAFAFA;
     height: 315px;
-    width: 86%;
+    width: 81%;
     margin: 0 100px;
     display: flex;
     justify-content: space-around;
+}
+select{
+    width: 10px;
 }
 
 .photograph-photoContact{
@@ -22,13 +25,20 @@
 }
 
 .photographerName{
-    font-size: 50px;
+    font-size: 64px;
 }
 
 .photographerCity{
     color: rgba(144, 28, 28, 1);
     font-size: 24px;
-    margin-top: -27px;
+    margin-top: -37px;
+    line-height: 0;
+}
+
+.photographerTagLine{
+    color: rgba(82, 82, 82, 1);
+    font-size: 18px;
+    line-height: 32px;
 }
 
 .photographerPhoto{
@@ -36,7 +46,8 @@
     height: 200px;
     border-radius: 50%;
     box-shadow:0px 4px 12px 0px rgba(0, 0, 0, 0.25);
-    margin-top: 47px;
+    margin-top: 47px;overflow-clip-margin: unset;
+    object-fit: cover;
 }
 
 .photographerWorksSection{
@@ -44,10 +55,11 @@
 }
 
 #sort{
-    margin-right: 15px;
+    margin-right: 1%;
     margin-bottom: 67px;
     font-weight: 700;
     font-size: 22px;
+    margin-left: 5%;
 }
 
 #sortWorks{
@@ -67,7 +79,7 @@
     flex-wrap: wrap;
     gap: 50px;
     margin: 0 100px;
-    width: 100%;
+    width: 94%;
 }
 
 .photographers-works{
@@ -130,7 +142,7 @@ width: 350px;
 }
 
 .nberTotalOfLikesDiv p{
-    font-size: 20px;
+    font-size: 30px;
     margin: auto;
     font-weight: 600;
     margin-right: 18px;
@@ -175,7 +187,8 @@ width: 350px;
 .lightbox__img{
     width: 50%;
     height: 76%;
-    object-fit: contain;
+    object-fit: cover;
+    overflow-clip-margin: unset;
 }
 
 .lightbox__video{
@@ -192,8 +205,7 @@ width: 350px;
     position: fixed;
     top: 50%;
     right: 11%;
-    z-index: 11;
-    text-indent: 3000px;
+    z-index: 1000;
     cursor: pointer;
 }
 
@@ -215,6 +227,16 @@ width: 350px;
 
 } 
 
+.lightbox__titlePhoto{
+    font-size: 24px;
+    position: fixed;
+    top: 88%;
+    left: 25%;
+    z-index: 1000;
+    color: #901C1C;
+    
+}
+
 .contact_button {
     font-size: 20px;
     font-weight: bold;
@@ -226,7 +248,7 @@ width: 350px;
     background-color: #901C1C;
     border-radius: 5px;
     cursor: pointer;
-    /* margin-top: 126px; */
+
 }
 
 #contactHeaderBtn{
@@ -236,7 +258,7 @@ width: 350px;
 .modal {
     border-radius: 5px;
     background-color: #DB8876;
-    width: 50%;
+    width: 46%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -250,21 +272,41 @@ width: 350px;
    
 }
 
-.modal header {
+.modalHeader {
     justify-content: space-between;
     width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
-.modal header img {
-    cursor: pointer;
-}
-
-.modal header h2 {
+.modalHeader div{
+    display: flex;
+    flex-direction: column-reverse;
+    font-weight: 600;
+    line-height: 0;
+    margin-top: 100px;
+    padding-top: 141px;
     font-size: 64px;
-    font-weight: normal;
-    text-align: center;
-    margin-top: -9px;
 }
+
+.modalHeader img {
+    cursor: pointer;
+    width: 72px;
+}
+
+.modalContactPhotographerName{
+    font-size: 76px;
+    margin-top: 28px;
+    height: 56px;
+    font-weight: 500;
+}
+.modalHeader h2 {
+    font-size: 76px;
+    margin-top: -48px;
+    color: #000;
+}
+
+
 
 form {
     display: flex;
@@ -283,7 +325,7 @@ form div {
     flex-direction: column;
     width: 100%;
     align-items: self-start;
-    margin-bottom: 26px;
+    margin-bottom: 47px;
 }
 
 form input {
@@ -291,5 +333,10 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+    font-size: 18px;
+}
+
+#msgArea{
+    width: 100%;
 }
 

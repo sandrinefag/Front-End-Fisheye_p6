@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
@@ -10,11 +10,11 @@
   </head>
   <body>
     <header>
-      <a href="index.html"><img src="assets/images/logo.png" class="logo" /></a>
+      <a href="index.html" aria-label="page d'accueil"><img src="assets/images/logo.png" class="logo" /></a>
     </header>
     <main id="main">
       <section class="photograph-header">
-        <button class="contact_button" id="contactHeaderBtn" onclick="displayModal()">Contactez-moi</button>
+        <button class="contact_button" id="contactHeaderBtn" role="button" onclick="displayModal()" aria-label="formulaire de contact">Contactez-moi</button>
       </section>
       <section class="photographerWorksSection">
         <label for="sort" id="sort">Trier par:</label>
@@ -33,15 +33,16 @@
           <img src="" alt="" class="lightbox__img">
           <video controls class="lightbox__video"></video>
         </div>
+        <p class="lightbox__titlePhoto"></p>
       </div>
     </main>
-    <div id="contact_modal">
+    <div id="contact_modal" role="dialog">
 			<div class="modal">
-				<header>
+				<header class="modalHeader">
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <img src="assets/icons/close.svg" onclick="closeModal()" aria-label="fermer le formulaire de contact"  />
         </header>
-				<form>
+				<form aria-labelledby="">
 					<div>
 						<label for="firstNameInput">Prénom</label>
 						<input type="text" id="firstNameInput">
@@ -50,9 +51,9 @@
             <label for="mailInput">E-Mail</label>
             <input type="text" id="mailInput">
             <label for="msgArea">Votre message</label>
-            <textarea type="area" id="msgArea" cols="86" rows="10"></textarea>
+            <textarea type="area" id="msgArea" cols="86" rows="20"></textarea>
 					</div>
-          <button class="contact_button" id="sendFormBtn">Envoyer</button>
+          <button class="contact_button" id="sendFormBtn" aria-label="envoyer">Envoyer</button>
 				</form>
 			</div>
 		</div>
