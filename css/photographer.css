@@ -74,6 +74,10 @@ select{
     background-color: rgba(144, 28, 28, 1);
 }
 
+#sortWorks:hover, #sortWorks:focus{
+background-color: #D3573C;
+}
+
 .photographerWorks{
     display: flex;
     flex-wrap: wrap;
@@ -249,6 +253,10 @@ width: 350px;
     border-radius: 5px;
     cursor: pointer;
 
+}
+
+.contact_button:hover, .contact_button:focus{
+    background-color: #D3573C ;
 }
 
 #contactHeaderBtn{

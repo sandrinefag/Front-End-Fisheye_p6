@@ -1,18 +1,17 @@
-function displayModal() {
-    const modal = document.getElementById("contact_modal");
-	modal.style.display = "block";
-}
+document.addEventListener(`DOMContentLoaded`, function(){
 
-function closeModal() {
-    const modal = document.getElementById("contact_modal");
-    modal.style.display = "none";
-}
 
 const firstNameInput = document.getElementById(`firstNameInput`)
 const lastNameInput = document.getElementById(`lastNameInput`)
 const mailInput = document.getElementById(`mailInput`)
 const msgArea = document.getElementById(`msgArea`)
 const sendFormBtn = document.getElementById(`sendFormBtn`) 
+
+if (!firstNameInput || !lastNameInput || !mailInput || !msgArea || !sendFormBtn) {
+    console.error("Un ou plusieurs éléments du formulaire sont introuvables.");
+    return;
+    }
+    
 
 
 function checkUserName(userName) {
@@ -34,7 +33,6 @@ function checkMessageLength(userMsg) {
 
 firstNameInput.addEventListener(`change`, (event) => {
     const userInput = event.target.value
-    console.log(`Prénom: ${userInput}` )
     const nameIsItValid = checkUserName(userInput)
     if (nameIsItValid) {
         firstNameInput.style.background = "green"
@@ -108,4 +106,14 @@ sendFormBtn.addEventListener(`click`, (event) => {
     event.preventDefault()
     checkedValidityOfForm()
 
-})    
+})
+})
+function displayModal() {
+    const modal = document.getElementById("contact_modal");
+	modal.style.display = "block";
+}
+
+function closeModal() {
+    const modal = document.getElementById("contact_modal");
+    modal.style.display = "none";
+}

@@ -1,5 +1,5 @@
-import { displayMediaInLightBox } from "../pages/lightbox.js"
-import{like} from "../pages/photographer.js"
+import { addKeydownEvent, addClickEvent } from "../pages/photographer.js"
+
 // Fonction pour afficher les informations du photographe
 export function displayPhotographerInfos(photographer) {
     if (!photographer) {
@@ -33,7 +33,7 @@ export function displayPhotographerInfos(photographer) {
     photographerPhoto.classList.add(`photographerPhoto`)
     photographerPhoto.setAttribute(`src`, photographerPicture)
     photographerPhoto.setAttribute(`tabindex`, 0)
-    photographerPhoto.setAttribute(`alt`, `photo-portrait de ${photographer.name}`)
+    photographerPhoto.setAttribute(`alt`, `photo de profil de ${photographer.name}.`)
   
    
     photographerHeader.appendChild(photographerInfosPart)
@@ -73,7 +73,7 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
         const pricePerDay = document.createElement(`p`)
         pricePerDay.innerText = `${photographer.price}€/jour`
 
-        mediasPhoto.forEach((media, index) => {
+        mediasPhoto.forEach((media) => {
             const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`
             
             const photosDiv = document.createElement(`div`)
@@ -84,8 +84,8 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
             mediaElement.classList.add(`photographers-works`)
             mediaElement.setAttribute(`src`, photographerWorksPath)
             mediaElement.setAttribute(`tabindex`, `0`)
-            mediaElement.setAttribute(`alt`, `la photographie se nomme ${media.title}`)
-            mediaElement.setAttribute(`title`, `${media.title}`)
+            mediaElement.setAttribute(`aria-label`, ` ${media.title} Cliquez pour une vue rapprochée`)
+          
 
 
             const photoDetailsDiv = document.createElement(`div`)
@@ -99,20 +99,18 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
             nberOfPhotoLike.innerText = `${media.likes}`
             nberOfPhotoLike.classList.add(`nberOfLike`)
             nberOfPhotoLike.setAttribute(`tabindex`, `0`)
-            nberOfPhotoLike.setAttribute(`aria-label`,`${media.likes} likes`)
-
+        
             const iconLike = document.createElement(`img`)
             iconLike.setAttribute(`src`, iconLikeBrownPath)
             iconLike.classList.add(`iconLike`)
             iconLike.setAttribute(`tabindex`, `0`)
-            iconLike.setAttribute(`aria-label`, `icône pour liker`)
+            iconLike.setAttribute(`aria-label`, `like`)
 
             const likeDiv = document.createElement(`div`)
             likeDiv.classList.add(`likeDiv`)
 
             totalLikes += parseInt(nberOfPhotoLike.innerText)
        
-    
             photosGallery.appendChild(photosDiv)
             photosDiv.appendChild(mediaElement)
             photosDiv.appendChild(photoDetailsDiv)
@@ -126,20 +124,9 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
             nberTotalOfLikesDiv.appendChild(pricePerDay)
             photosGallery.appendChild(nberTotalOfLikesDiv)
 
-            mediaElement.addEventListener(`click`, () => {
-                let currentIndex = index
-                displayMediaInLightBox(mediasPhoto[currentIndex], photographer)
-               like()   
-            })
-
-            // mediaElement.addEventListener(`keydown`, (event) => {
-            //     let currentIndex = index
-            //     const key = event.key
-            //     if (key === `Enter`) {
-            //         displayMediaInLightBox(mediasPhoto[currentIndex], photographer)
-            //     }
-               
-            // })
+           
+            addClickEvent(mediaElement, media, photographer)
+            addKeydownEvent(mediaElement, media, photographer)
             nberTotalOfLikeCounter.innerText = totalLikes 
         }) 
     }

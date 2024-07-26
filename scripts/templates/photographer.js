@@ -17,7 +17,7 @@ function photographerTemplate(data) {
         idPhotographerPart.classList.add(`photoNamePhotographer`);
         const img = document.createElement(`img`);
         img.setAttribute(`src`, picture)
-        img.setAttribute(`aria-label`, `photo du profile de ${name}`)
+        img.setAttribute(`alt`, `photo profil de ${name}. Accédez à sa page`)
         const h2 = document.createElement( 'h2' );
         h2.textContent = name;
 
@@ -46,13 +46,6 @@ function photographerTemplate(data) {
         photographerInfo.appendChild(photographerTown);
         photographerInfo.appendChild(photographerTagLine);
         photographerInfo.appendChild(photographerPrice);
-
-       
-      
-       
-       
-        
-        
        
         return (article);
     }

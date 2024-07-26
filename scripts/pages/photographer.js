@@ -1,6 +1,6 @@
 // //Mettre le code JavaScript lié à la page photographer.html
 import { displayPhotographerInfos, displayPhotographerWorks, photographerNameModal } from "../templates/photographerGallery.js"
-import { lightboxBtnControls } from "./lightbox.js"
+import { lightboxBtnControls, displayMediaInLightBox } from "./lightbox.js"
 
 
 let mediasPhoto = []
@@ -19,12 +19,11 @@ async function loadPhotographerData() {
      
       
         displayPhotographerInfos(photographer);
-        
-        //Afficher gallerie photos
         displayPhotographerWorks(photographer, mediasPhoto)
         lightboxBtnControls(mediasPhoto, photographer)
-        like()
         photographerNameModal(photographer)
+        gallerySort()
+        like()
     } catch (error) {
         console.error(`Erreur lors du chargement des données du photographe:`, error);
     }
@@ -75,6 +74,7 @@ function gallerySort(){
      like()
         })
 }
+
 gallerySort()
 //---------------------------------------------------------
 function getPhotographerIdFromURL() {
@@ -120,19 +120,21 @@ export function like() {
                 let likesElement = heartIconClicked.previousElementSibling
                 let currentLikes = parseInt(likesElement.innerText)
 
+                console.log(currentLikes)
                 if (!heartLike[i].classList.contains(`liked`)) {
                     heartLike[i].classList.add(`liked`)
                     currentLikes += 1
                     totalLikes += 1
-                    likesElement.innerText = currentLikes
+                    // likesElement.innerText = currentLikes
+                  
                     
                 } else {
                     heartLike[i].classList.remove(`liked`)
                     currentLikes -= 1
                     totalLikes -= 1
-                   likesElement.innerText = currentLikes 
+                  
                 }
-
+                likesElement.innerText = currentLikes 
                 nberTotalOfLikeCounter.innerText = totalLikes
             })  
         }
@@ -141,3 +143,21 @@ export function like() {
     }
 }
 like()
+
+export function addKeydownEvent(mediaElement, media, photographer) {
+    
+    mediaElement.addEventListener(`keydown`, (event) => {
+        const key = event.key
+        if (key === `Enter`) {
+            displayMediaInLightBox(media, photographer)
+        }
+       
+    })
+}
+
+export function addClickEvent(mediaElement, media, photographer) {
+    mediaElement.addEventListener(`click`, () => {
+        displayMediaInLightBox(media, photographer)
+       like()   
+    })
+}
