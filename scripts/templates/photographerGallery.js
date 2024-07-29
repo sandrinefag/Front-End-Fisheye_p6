@@ -1,147 +1,144 @@
-import { addKeydownEvent, addClickEvent } from "../pages/photographer.js"
+import { addKeydownEvent, addClickEvent, like } from "../pages/photographer.js";
 
 // Fonction pour afficher les informations du photographe
 export function displayPhotographerInfos(photographer) {
-    if (!photographer) {
-        console.error(`Aucun photographe trouvé avec cet ID.`);
-        return;
-    }
-     const photographerHeader = document.querySelector(`.photograph-header`);
-    const photographerInfosPart = document.createElement(`div`)
-    photographerInfosPart.classList.add(`photographerInfos`)
+	
+	const photographerHeader = document.querySelector(`.photograph-header`);
+	const photographerInfosPart = document.createElement(`div`);
+	photographerInfosPart.classList.add(`photographerInfos`);
 
-    const photographerPhotoContact = document.createElement(`div`)
-    photographerPhotoContact.classList.add(`photograph-photoContact`)
+	const photographerPhotoContact = document.createElement(`div`);
+	photographerPhotoContact.classList.add(`photograph-photoContact`);
 
-    const photographContactBtn = document.querySelector(`#contactHeaderBtn`)
-  
-    const photographerPicture = `assets/photographers/${photographer.portrait}`
-    
-    const photographerName = document.createElement(`h1`)
-    photographerName.classList.add(`photographerName`)
-    photographerName.innerText = photographer.name
+	const photographContactBtn = document.querySelector(`#contactHeaderBtn`);
 
-    const photographerCity = document.createElement(`p`)
-    photographerCity.classList.add(`photographerCity`)
-    photographerCity.innerText = `${photographer.city}, ${photographer.country}`
+	const photographerPicture = `assets/photographers/${photographer.portrait}`;
 
-    const photographerTagLine = document.createElement(`p`)
-    photographerTagLine.classList.add(`photographerTagLine`)
-    photographerTagLine.innerText = photographer.tagline
+	const photographerName = document.createElement(`h1`);
+	photographerName.classList.add(`photographerName`);
+	photographerName.innerText = photographer.name;
 
-    const photographerPhoto = document.createElement(`img`)
-    photographerPhoto.classList.add(`photographerPhoto`)
-    photographerPhoto.setAttribute(`src`, photographerPicture)
-    photographerPhoto.setAttribute(`tabindex`, 0)
-    photographerPhoto.setAttribute(`alt`, `photo de profil de ${photographer.name}.`)
-  
-   
-    photographerHeader.appendChild(photographerInfosPart)
-    photographerHeader.appendChild(photographerPhotoContact)
-    photographerInfosPart.appendChild(photographerName)
-    photographerInfosPart.appendChild(photographerCity)
-    photographerInfosPart.appendChild(photographerTagLine)
-    photographerPhotoContact.appendChild(photographContactBtn)
-    photographerPhotoContact.appendChild(photographerPhoto)  
+	const photographerCity = document.createElement(`p`);
+	photographerCity.classList.add(`photographerCity`);
+	photographerCity.innerText = `${photographer.city}, ${photographer.country}`;
+
+	const photographerTagLine = document.createElement(`p`);
+	photographerTagLine.classList.add(`photographerTagLine`);
+	photographerTagLine.innerText = photographer.tagline;
+
+	const photographerPhoto = document.createElement(`img`);
+	photographerPhoto.classList.add(`photographerPhoto`);
+	photographerPhoto.setAttribute(`src`, photographerPicture);
+	photographerPhoto.setAttribute(`tabindex`, 0);
+	photographerPhoto.setAttribute(`alt`,`photo de profil de ${photographer.name}.`);
+	photographerHeader.appendChild(photographerInfosPart);
+	photographerHeader.appendChild(photographerPhotoContact);
+	photographerInfosPart.appendChild(photographerName);
+	photographerInfosPart.appendChild(photographerCity);
+	photographerInfosPart.appendChild(photographerTagLine);
+	photographerPhotoContact.appendChild(photographContactBtn);
+	photographerPhotoContact.appendChild(photographerPhoto);
 }
 
 //------------------------------------------------
 
-
 export function displayPhotographerWorks(photographer, mediasPhoto) {
-    //photographer's works
-    const photosGallery = document.querySelector(`.photographerWorks`)
-    photosGallery.innerHTML = '';
-   
-    let totalLikes = 0
-    
-    if (mediasPhoto.length > 0) {
-        const iconLikeBrownPath = `../assets/icons/heart.png`
-        const iconLikeBlackPath = `../assets/icons/black-heart-solid.svg`
+	const photosGallery = document.querySelector(`.photographerWorks`);
+	photosGallery.innerHTML = "";
 
-        const nberTotalOfLikesDiv = document.createElement(`div`)
-        nberTotalOfLikesDiv.classList.add(`nberTotalOfLikesDiv`)
+	let totalLikes = 0;
 
-        const totalLikesDiv = document.createElement(`div`)
-        const nberTotalOfLikeCounter = document.createElement(`p`)
-        nberTotalOfLikeCounter.classList.add(`counterOfTotalLikes`)
-        nberTotalOfLikeCounter.setAttribute(`tabindex`, `0`)
+	if (mediasPhoto.length > 0) {
+		const iconLikeOffPath = `../assets/icons/heart.png`;
+		const iconLikeTotalPath = `../assets/icons/black-heart-solid.svg`;
+		const iconLikeOnPath = `../assets/icons/heart-like.svg `;
 
-        const nberLikeTotalIcon = document.createElement(`img`)
-        nberLikeTotalIcon.setAttribute(`src`, iconLikeBlackPath)
+		const nberTotalOfLikesDiv = document.createElement(`div`);
+		nberTotalOfLikesDiv.classList.add(`nberTotalOfLikesDiv`);
 
-        const pricePerDay = document.createElement(`p`)
-        pricePerDay.innerText = `${photographer.price}€/jour`
+		const totalLikesDiv = document.createElement(`div`);
+		const nberTotalOfLikeCounter = document.createElement(`p`);
+		nberTotalOfLikeCounter.classList.add(`counterOfTotalLikes`);
+		nberTotalOfLikeCounter.setAttribute(`tabindex`, `0`);
 
-        mediasPhoto.forEach((media) => {
-            const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`
-            
-            const photosDiv = document.createElement(`div`)
-            photosDiv.classList.add(`media-container`)
+		const nberLikeTotalIcon = document.createElement(`img`);
+		nberLikeTotalIcon.setAttribute(`src`, iconLikeTotalPath);
+		nberLikeTotalIcon.setAttribute(`alt`, `like total`);
 
-   
-            const mediaElement = media.image ? document.createElement(`img`) : document.createElement(`video`)
-            mediaElement.classList.add(`photographers-works`)
-            mediaElement.setAttribute(`src`, photographerWorksPath)
-            mediaElement.setAttribute(`tabindex`, `0`)
-            mediaElement.setAttribute(`aria-label`, ` ${media.title} Cliquez pour une vue rapprochée`)
-          
+		const pricePerDay = document.createElement(`p`);
+		pricePerDay.innerText = `${photographer.price}€/jour`;
 
+		mediasPhoto.forEach((media) => {
+			const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
+			const photosDiv = document.createElement(`div`);
+			photosDiv.classList.add(`media-container`);
 
-            const photoDetailsDiv = document.createElement(`div`)
-            photoDetailsDiv.classList.add(`photoDetailsDiv`)
+			const mediaElement = media.image ? document.createElement(`img`) : document.createElement(`video`);
+			mediaElement.classList.add(`photographers-works`);
+			mediaElement.setAttribute(`src`, photographerWorksPath);
+			mediaElement.setAttribute(`tabindex`, `0`);
+			mediaElement.setAttribute(`aria-label`, ` ${media.title} Cliquez pour une vue rapprochée`);
 
-            const photoName = document.createElement(`p`)
-            photoName.innerText = `${media.title}`
-            photoName.classList.add(`photoName`)
+			const photoDetailsDiv = document.createElement(`div`);
+			photoDetailsDiv.classList.add(`photoDetailsDiv`);
 
-            const nberOfPhotoLike = document.createElement(`p`)
-            nberOfPhotoLike.innerText = `${media.likes}`
-            nberOfPhotoLike.classList.add(`nberOfLike`)
-            nberOfPhotoLike.setAttribute(`tabindex`, `0`)
-        
-            const iconLike = document.createElement(`img`)
-            iconLike.setAttribute(`src`, iconLikeBrownPath)
-            iconLike.classList.add(`iconLike`)
-            iconLike.setAttribute(`tabindex`, `0`)
-            iconLike.setAttribute(`aria-label`, `like`)
+			const photoName = document.createElement(`p`);
+			photoName.innerText = `${media.title}`;
+			photoName.classList.add(`photoName`);
 
-            const likeDiv = document.createElement(`div`)
-            likeDiv.classList.add(`likeDiv`)
+			const nberOfPhotoLike = document.createElement(`p`);
+			nberOfPhotoLike.innerText = `${media.likes}`;
+			nberOfPhotoLike.classList.add(`nberOfLike`);
+			nberOfPhotoLike.setAttribute(`tabindex`, `0`);
 
-            totalLikes += parseInt(nberOfPhotoLike.innerText)
-       
-            photosGallery.appendChild(photosDiv)
-            photosDiv.appendChild(mediaElement)
-            photosDiv.appendChild(photoDetailsDiv)
-            photoDetailsDiv.appendChild(likeDiv)
-            photoDetailsDiv.appendChild(photoName)
-            likeDiv.appendChild(nberOfPhotoLike)
-            likeDiv.appendChild(iconLike)
-            nberTotalOfLikesDiv.appendChild(totalLikesDiv)
-            totalLikesDiv.appendChild(nberTotalOfLikeCounter)
-            totalLikesDiv.appendChild(nberLikeTotalIcon)
-            nberTotalOfLikesDiv.appendChild(pricePerDay)
-            photosGallery.appendChild(nberTotalOfLikesDiv)
+			const iconLikeOff = document.createElement(`img`);
+			iconLikeOff.setAttribute(`src`, iconLikeOffPath);
+			iconLikeOff.classList.add(`likeOff`);
+			iconLikeOff.setAttribute(`tabindex`, `0`);
+			iconLikeOff.setAttribute(`aria-label`, `icone pour like`);
 
-           
-            addClickEvent(mediaElement, media, photographer)
-            addKeydownEvent(mediaElement, media, photographer)
-            nberTotalOfLikeCounter.innerText = totalLikes 
-        }) 
-    }
+			const iconLikeOn = document.createElement(`img`);
+			iconLikeOn.setAttribute(`src`, iconLikeOnPath);
+			iconLikeOn.classList.add(`likeOn`);
+			iconLikeOn.setAttribute(`alt`, `photo ajouté au like`);
+
+			const likeDiv = document.createElement(`div`);
+			likeDiv.classList.add(`likeDiv`);
+
+			totalLikes += parseInt(nberOfPhotoLike.innerText);
+
+			photosGallery.appendChild(photosDiv);
+			photosDiv.appendChild(mediaElement);
+			photosDiv.appendChild(photoDetailsDiv);
+			photoDetailsDiv.appendChild(likeDiv);
+			photoDetailsDiv.appendChild(photoName);
+			likeDiv.appendChild(nberOfPhotoLike);
+			likeDiv.appendChild(iconLikeOff);
+			likeDiv.appendChild(iconLikeOn);
+			nberTotalOfLikesDiv.appendChild(totalLikesDiv);
+			totalLikesDiv.appendChild(nberTotalOfLikeCounter);
+			totalLikesDiv.appendChild(nberLikeTotalIcon);
+			nberTotalOfLikesDiv.appendChild(pricePerDay);
+			photosGallery.appendChild(nberTotalOfLikesDiv);
+
+			addClickEvent(mediaElement, media, photographer);
+			addKeydownEvent(mediaElement, media, photographer);
+			nberTotalOfLikeCounter.innerText = totalLikes;
+		});
+		like()
+	}
 }
 
 export function photographerNameModal(photographer) {
-    const contactHeaderModal = document.querySelector(`.modalHeader`)
-    const divContact = document.createElement(`div`)
-    divContact.classList.add(`.modalContactDiv`)
-    const headerTitleContactModal = document.querySelector(`.modalHeader h2`)
-    const contactNameTag = document.createElement(`p`)
-    contactNameTag.classList.add(`modalContactPhotographerName`)
-    contactNameTag.innerText = `${photographer.name}`
-    contactHeaderModal.appendChild(divContact)
-    divContact.appendChild(contactNameTag)
-    divContact.appendChild(headerTitleContactModal)
-}
+	const contactHeaderModal = document.querySelector(`.modalHeader`);
+	const divContact = document.createElement(`div`);
+	divContact.classList.add(`.modalContactDiv`);
+	const headerTitleContactModal = document.querySelector(`.modalHeader h2`);
+	const contactNameTag = document.createElement(`p`);
+	contactNameTag.classList.add(`modalContactPhotographerName`);
+	contactNameTag.innerText = `${photographer.name}`;
 
+	contactHeaderModal.appendChild(divContact);
+	divContact.appendChild(contactNameTag);
+	divContact.appendChild(headerTitleContactModal);
+}
