@@ -1,4 +1,3 @@
-const body = document.querySelector(`body`);
 const lightbox = document.querySelector(`.lightbox`);
 const lightboxImg = document.querySelector(`.lightbox__img`);
 const lightboxVideo = document.querySelector(`.lightbox__video`);
@@ -35,8 +34,8 @@ function trapFocus(element) {
 
 export function displayMediaInLightBox(media, photographer) {
 	const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
-
 	lightbox.style.display = `flex`;
+
 
 	if (media.image) {
 		lightboxImg.src = photographerWorksPath;
@@ -48,7 +47,8 @@ export function displayMediaInLightBox(media, photographer) {
 		lightboxVideo.src = photographerWorksPath;
 	}
 	lightboxTitlePhoto.innerText = `${media.title}`;
-	trapFocus(lightbox);
+	// trapFocus(lightbox)
+	
 }
 
 export function lightboxBtnControls(mediasPhoto, photographer) {

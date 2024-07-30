@@ -123,9 +123,11 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 
 			addClickEvent(mediaElement, media, photographer);
 			addKeydownEvent(mediaElement, media, photographer);
+			like()
 			nberTotalOfLikeCounter.innerText = totalLikes;
 		});
-		like()
+	
+		
 	}
 }
 

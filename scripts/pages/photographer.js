@@ -156,7 +156,7 @@ export function addKeydownEvent(mediaElement, media, photographer) {
 			displayMediaInLightBox(media, photographer);
 			like()
 		}
-	});
+	}); 
 }
 
 export function addClickEvent(mediaElement, media, photographer) {
