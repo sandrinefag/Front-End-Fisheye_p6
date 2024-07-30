@@ -49,9 +49,9 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 	let totalLikes = 0;
 
 	if (mediasPhoto.length > 0) {
-		const iconLikeOffPath = `../assets/icons/heart.png`;
-		const iconLikeTotalPath = `../assets/icons/black-heart-solid.svg`;
-		const iconLikeOnPath = `../assets/icons/heart-like.svg `;
+		const iconLikeOffPath = `./assets/icons/heart.png`;
+		const iconLikeTotalPath = `./assets/icons/black-heart-solid.svg`;
+		const iconLikeOnPath = `./assets/icons/heart-like.svg `;
 
 		const nberTotalOfLikesDiv = document.createElement(`div`);
 		nberTotalOfLikesDiv.classList.add(`nberTotalOfLikesDiv`);
