@@ -34,7 +34,7 @@ loadPhotographerData();
 
 async function fetchPhotographerById(photographerId) {
 	try {
-		const response = await fetch(`../../data/photographers.json`);
+		const response = await fetch(`../data/photographers.json`);
 		const data = await response.json();
 		// Trouver le photographe correspondant à l'ID
 		const photographer = data.photographers.find((photograph) => photograph.id == photographerId);
