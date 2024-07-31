@@ -112,11 +112,14 @@ export function like() {
 	const nberTotalOfLikeCounter = document.querySelector(`.counterOfTotalLikes`);
 
 	let totalLikes = parseInt(nberTotalOfLikeCounter.innerText);
+	console.log(totalLikes)
 
 	heartLikeOff.forEach((heartIconOff, index) => {
+		
 		const heartIconOn = heartLikeOn[index];
 		let likesElement = heartIconOff.previousElementSibling;
 		let currentLikes = parseInt(likesElement.innerText);
+		
 		heartIconOff.addEventListener(`click`, () => {
 			if (!heartIconOff.classList.contains(`likedNone`)) {
 				heartIconOff.classList.add(`likedNone`);
@@ -126,10 +129,11 @@ export function like() {
 				heartIconOn.classList.add(`likeOff`);
 				currentLikes += 1;
 				totalLikes += 1;
+				
+				likesElement.innerText = currentLikes;
+				nberTotalOfLikeCounter.innerText = totalLikes;
 			}
-
-			likesElement.innerText = currentLikes;
-			nberTotalOfLikeCounter.innerText = totalLikes;
+			
 		});
 
 		heartIconOn.addEventListener(`click`, () => {
@@ -138,16 +142,21 @@ export function like() {
 				heartIconOn.classList.add(`likedNone`);
 				heartIconOff.classList.remove(`likedNone`);
 				heartIconOff.classList.add(`likeOff`);
+			
 				currentLikes -= 1;
 				totalLikes -= 1;
+				
+				likesElement.innerText = currentLikes;
+				nberTotalOfLikeCounter.innerText = totalLikes;
 			}
-
-			likesElement.innerText = currentLikes;
-			nberTotalOfLikeCounter.innerText = totalLikes;
+				
 		});
+		
+			
 	});
+
 }
-like();
+// like();
 
 export function addKeydownEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`keydown`, (event) => {
