@@ -5,9 +5,9 @@ const lightboxTitlePhoto = document.querySelector(`.lightbox__titlePhoto`);
 const prevBtn = document.querySelector(`.lightbox__prev`);
 const nextBtn = document.querySelector(`.lightbox__next`);
 const closeBtn = document.querySelector(`.lightbox__close`);
+const focusableElements = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 function trapFocus(element) {
-	const focusableElements = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
 	const firstFocusableElement = element.querySelectorAll(focusableElements)[0];
 	const focusableContent = element.querySelectorAll(focusableElements);
 	const lastFocusableElement = focusableContent[focusableContent.length - 1];
@@ -27,16 +27,14 @@ function trapFocus(element) {
 			}
 		}
 	});
-
-	// Set focus to the first element in the lightbox
+	
 	firstFocusableElement.focus();
 }
 
 export function displayMediaInLightBox(media, photographer) {
 	const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
 	lightbox.style.display = `flex`;
-
-
+	trapFocus(lightbox)
 	if (media.image) {
 		lightboxImg.src = photographerWorksPath;
 		lightboxImg.style.display = `block`;
@@ -47,12 +45,12 @@ export function displayMediaInLightBox(media, photographer) {
 		lightboxVideo.src = photographerWorksPath;
 	}
 	lightboxTitlePhoto.innerText = `${media.title}`;
-	// trapFocus(lightbox)
 	
 }
 
 export function lightboxBtnControls(mediasPhoto, photographer) {
 	let currentIndex = 0;
+	trapFocus(element)
 
 	nextBtn.addEventListener(`click`, () => {
 		currentIndex = (currentIndex + 1) % mediasPhoto.length;
@@ -79,5 +77,7 @@ export function lightboxBtnControls(mediasPhoto, photographer) {
 		} else if (key === `Escape`) {
 			lightbox.style.display = `none`;
 		}
+		
 	});
+	
 }
