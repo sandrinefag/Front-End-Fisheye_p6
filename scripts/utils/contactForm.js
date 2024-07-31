@@ -8,7 +8,28 @@ document.addEventListener(`DOMContentLoaded`, function () {
 	const focusElementsSelector = `a, button, input, textarea, select, .modalHeader img`;
 	const closeModalBtn = document.querySelector(`.modalHeader img`);
 
+// ----------------------------------------------------------------//	
 
+function trapFocus(event) {
+	const focusElementsInModal = getFocusElementsInModal();
+	const firstElement = focusElementsInModal[0];
+	const lastElement = focusElementsInModal[focusElements.length - 1];
+
+	if (event.key === "Tab") {
+		if (event.shiftKey) {
+			if (document.activeElement === firstElement) {
+				event.preventDefault();
+				lastElement.focus();
+			}
+		} else {
+			if (document.activeElement === lastElement) {
+				event.preventDefault();
+				firstElement.focus();
+			}
+		}
+	}
+}
+	
 	function getFocusableElements() {
 		return Array.from(document.querySelectorAll(focusElementsSelector));
 	}
@@ -37,6 +58,8 @@ document.addEventListener(`DOMContentLoaded`, function () {
 		});
 	}
 
+	//--------------------------------------------------------------//
+
 	function checkUserName(userName) {
 		let regexNames = new RegExp(
 			"^[a-zA-ZÀ-ÖØ-öøç]{2,15}[-]{0,1}[a-zA-ZÀ-ÖØ-öøç]{0,15}$");
@@ -52,6 +75,8 @@ document.addEventListener(`DOMContentLoaded`, function () {
 		let regexMsgLetters = /^[a-zA-ZÀ-ÖØ-öøçéèêëàâîïôùûüÿç\s,.'-:;]{10,1000}$/;
 		return regexMsgLetters.test(userMsg);
 	}
+
+	//--------------------------------------------------------------------------//
 
 	firstNameInput.addEventListener(`change`, (event) => {
 		const userInput = event.target.value;
@@ -104,6 +129,8 @@ document.addEventListener(`DOMContentLoaded`, function () {
 		}
 	});
 
+//---------------------------------------------------------------------------------//	
+
 	function checkedValidityOfForm() {
 		const isValidFirstName = checkUserName(firstNameInput.value);
 		const isValidLastName = checkUserName(lastNameInput.value);
@@ -123,25 +150,8 @@ document.addEventListener(`DOMContentLoaded`, function () {
 		}
 	}
 
-	function trapFocus(event) {
-		const focusElementsInModal = getFocusElementsInModal();
-		const firstElement = focusElementsInModal[0];
-		const lastElement = focusElementsInModal[focusElements.length - 1];
 
-		if (event.key === "Tab") {
-			if (event.shiftKey) {
-				if (document.activeElement === firstElement) {
-					event.preventDefault();
-					lastElement.focus();
-				}
-			} else {
-				if (document.activeElement === lastElement) {
-					event.preventDefault();
-					firstElement.focus();
-				}
-			}
-		}
-	}
+//------------------------------------------------------------------//	
 	sendFormBtn.addEventListener(`click`, (event) => {
 		event.preventDefault();
 		checkedValidityOfForm();

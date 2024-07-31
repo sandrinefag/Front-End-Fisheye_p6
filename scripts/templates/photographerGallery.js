@@ -40,7 +40,7 @@ export function displayPhotographerInfos(photographer) {
 	photographerPhotoContact.appendChild(photographerPhoto);
 }
 
-//------------------------------------------------
+//------------------Affichage de la gallery photo------------------------------
 
 export function displayPhotographerWorks(photographer, mediasPhoto) {
 	const photosGallery = document.querySelector(`.photographerWorks`);
@@ -130,7 +130,7 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 	}
 	
 }
-
+//--------------------------------------------------------------------------------//
 export function photographerNameModal(photographer) {
 	const contactHeaderModal = document.querySelector(`.modalHeader`);
 	const divContact = document.createElement(`div`);

@@ -5,12 +5,13 @@ function photographerTemplate(data) {
 	const picture = `assets/photographers/${portrait}`;
 
 	function getUserCardDOM() {
-		//creation d'une balise a href pour rendre l'article cliquable
+	
 		const photographerPageLink = document.createElement("a");
 		photographerPageLink.setAttribute(`href`, `photographer.html?id=${id}`);
 		const article = document.createElement("article");
 
-		//division en 2 de l'article. Une div qui contient la photo et nom du photographe. Et une autre qui contient le reste des infos de celui-ci
+		//division en 2 de l'article. 
+		
 		//1ere partie
 		const idPhotographerPart = document.createElement(`div`);
 		idPhotographerPart.classList.add(`photoNamePhotographer`);

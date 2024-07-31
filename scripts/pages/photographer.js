@@ -1,4 +1,4 @@
-// //Mettre le code JavaScript lié à la page photographer.html
+//Mettre le code JavaScript lié à la page photographer.html
 import { displayPhotographerInfos, displayPhotographerWorks, photographerNameModal } from "../templates/photographerGallery.js";
 import { lightboxBtnControls, displayMediaInLightBox } from "./lightbox.js";
 
@@ -47,7 +47,8 @@ async function fetchPhotographerById(photographerId) {
 		);
 	}
 }
-//-------------------------Tri-----------------------------------------
+//------------------------------------------------------------------
+
 function gallerySort() {
 	document.querySelector(`#sortWorks`).addEventListener(`change`, function () {
 		const sortValue = this.value;
@@ -72,9 +73,10 @@ function gallerySort() {
 		like();
 	});
 }
-
 gallerySort();
+
 //---------------------------------------------------------
+
 function getPhotographerIdFromURL() {
 	return new URL(location.href).searchParams.get(`id`);
 }
@@ -105,6 +107,8 @@ function sortByTitle(mediasPhoto) {
 	like();
 	return sortedMedias;
 }
+
+//--------------------------------------------------------------------------//
 
 export function like() {
 	const heartLikeOff = document.querySelectorAll(`.likeOff`);
@@ -151,41 +155,46 @@ export function like() {
 				
 		});
 		
-		heartIconOff.addEventListener(`keydown`, () => {
-			if (!heartIconOff.classList.contains(`likedNone`)) {
-				heartIconOff.classList.add(`likedNone`);
-				heartIconOff.classList.remove(`likeOff`);
-				heartIconOn.classList.remove(`likeOn`);
-				heartIconOn.classList.remove(`likedNone`);
-				heartIconOn.classList.add(`likeOff`);
-				currentLikes += 1;
-				totalLikes += 1;
+		heartIconOff.addEventListener(`keydown`, (event) => {
+			if(event.key === `Enter`){
 				
-				likesElement.innerText = currentLikes;
-				nberTotalOfLikeCounter.innerText = totalLikes;
+				if (!heartIconOff.classList.contains(`likedNone`)) {
+					heartIconOff.classList.add(`likedNone`);
+					heartIconOff.classList.remove(`likeOff`);
+					heartIconOn.classList.remove(`likeOn`);
+					heartIconOn.classList.remove(`likedNone`);
+					heartIconOn.classList.add(`likeOff`);
+					currentLikes += 1;
+					totalLikes += 1;
+					
+					likesElement.innerText = currentLikes;
+					nberTotalOfLikeCounter.innerText = totalLikes;
+				}
 			}
-			
 		});
 
-		heartIconOn.addEventListener(`keydown`, () => {
-			if (heartIconOn.classList.contains(`likeOff`)) {
-				heartIconOn.classList.remove(`likeOff`);
-				heartIconOn.classList.add(`likedNone`);
-				heartIconOff.classList.remove(`likedNone`);
-				heartIconOff.classList.add(`likeOff`);
-			
-				currentLikes -= 1;
-				totalLikes -= 1;
+		heartIconOn.addEventListener(`keydown`, (event) => {
+			if (event.key === `Enter`){
+				if (heartIconOn.classList.contains(`likeOff`)) {
+					heartIconOn.classList.remove(`likeOff`);
+					heartIconOn.classList.add(`likedNone`);
+					heartIconOff.classList.remove(`likedNone`);
+					heartIconOff.classList.add(`likeOff`);
 				
-				likesElement.innerText = currentLikes;
-				nberTotalOfLikeCounter.innerText = totalLikes;
-			}
-				
+					currentLikes -= 1;
+					totalLikes -= 1;
+					
+					likesElement.innerText = currentLikes;
+					nberTotalOfLikeCounter.innerText = totalLikes;
+				}
+			}	
 		});
 			
 	});
 
 }
+
+//-----------------------------------------------------------------------//
 
 export function addKeydownEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`keydown`, (event) => {
@@ -197,6 +206,8 @@ export function addKeydownEvent(mediaElement, media, photographer) {
 		}
 	}); 
 }
+
+//---------------------------------------------------------------------//
 
 export function addClickEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`click`, () => {

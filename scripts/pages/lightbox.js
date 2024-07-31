@@ -9,32 +9,35 @@ const focusableElements = 'a[href], button, input, select, textarea, [tabindex]:
 
 function trapFocus(element) {
 	const firstFocusableElement = element.querySelectorAll(focusableElements)[0];
-	const focusableContent = element.querySelectorAll(focusableElements);
+	const focusableContent = Array.from(element.querySelectorAll(focusableElements))
 	const lastFocusableElement = focusableContent[focusableContent.length - 1];
 
 	element.addEventListener("keydown", function (event) {
 		if (event.key === "Tab") {
 			if (event.shiftKey) {
 				if (document.activeElement === firstFocusableElement) {
-					lastFocusableElement.focus();
 					event.preventDefault();
+					lastFocusableElement.focus();	
 				}
 			} else {
 				if (document.activeElement === lastFocusableElement) {
-					firstFocusableElement.focus();
 					event.preventDefault();
+					firstFocusableElement.focus();
+					
 				}
 			}
 		}
 	});
-	
+
 	firstFocusableElement.focus();
 }
+
+//--------------------------------------------------------------------------------------------//
 
 export function displayMediaInLightBox(media, photographer) {
 	const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
 	lightbox.style.display = `flex`;
-	trapFocus(lightbox)
+	lightbox.focus()
 	if (media.image) {
 		lightboxImg.src = photographerWorksPath;
 		lightboxImg.style.display = `block`;
@@ -48,9 +51,11 @@ export function displayMediaInLightBox(media, photographer) {
 	
 }
 
+//----------------------------------------------------------------------------------------//
+
 export function lightboxBtnControls(mediasPhoto, photographer) {
 	let currentIndex = 0;
-	trapFocus(element)
+	trapFocus(lightbox)
 
 	nextBtn.addEventListener(`click`, () => {
 		currentIndex = (currentIndex + 1) % mediasPhoto.length;
