@@ -56,11 +56,9 @@ select {
 }
 
 #sort {
-	margin-right: 1%;
-	margin-bottom: 67px;
 	font-weight: 700;
 	font-size: 22px;
-	margin-left: 5%;
+	margin: 101px;
 }
 
 #sortWorks {
@@ -82,10 +80,11 @@ select {
 
 .photographerWorks {
 	display: flex;
+	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 50px;
 	margin: 0 100px;
-	width: 94%;
+	width: 81%;
 }
 
 .photographers-works {

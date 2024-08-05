@@ -5,7 +5,7 @@ const lightboxTitlePhoto = document.querySelector(`.lightbox__titlePhoto`);
 const prevBtn = document.querySelector(`.lightbox__prev`);
 const nextBtn = document.querySelector(`.lightbox__next`);
 const closeBtn = document.querySelector(`.lightbox__close`);
-const focusableElements = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+const focusableElements = 'button, [tabindex]:not([tabindex="-1"])';
 
 function trapFocus(element) {
 	const firstFocusableElement = element.querySelectorAll(focusableElements)[0];
