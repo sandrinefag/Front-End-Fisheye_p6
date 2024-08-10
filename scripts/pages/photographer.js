@@ -109,11 +109,12 @@ function sortByTitle(mediasPhoto) {
 }
 
 //--------------------------------------------------------------------------//
-
-export function like() {
+	// const photographerLikesKey = `totalLikes_${photographerLikesKey}`
+export function like(photographerLikesKey) {
 	const heartLikeOff = document.querySelectorAll(`.likeOff`);
 	const heartLikeOn = document.querySelectorAll(`.likeOn`);
 	const nberTotalOfLikeCounter = document.querySelector(`.counterOfTotalLikes`);
+
 
 	let totalLikes = parseInt(nberTotalOfLikeCounter.innerText);
 
@@ -122,76 +123,185 @@ export function like() {
 		const heartIconOn = heartLikeOn[index];
 		let likesElement = heartIconOff.previousElementSibling;
 		let currentLikes = parseInt(likesElement.innerText);
+
+		const mediaId = heartIconOff.getAttribute('data-media-id');
+		const mediaLikeStatusKey = `likeStatus_${mediaId}`;
+
+		// Check if this media item was previously liked
+		const isLiked = localStorage.getItem(mediaLikeStatusKey) === 'true';
+
+		if (isLiked) {
+			// heartIconOff.classList.add(`likedNone`);
+			// heartIconOff.classList.remove(`likeOff`);
+			// heartIconOn.classList.add(`likeOn`);
+			// heartIconOn.classList.remove(`likeOff`);
+			heartIconOff.style.display = 'none';
+			heartIconOn.style.display = 'block';
+		} else {
+			heartIconOff.style.display = 'block';
+			heartIconOn.style.display = 'none';
+		}
 		
+// 		heartIconOff.addEventListener(`click`, () => {
+// 			if (!heartIconOff.classList.contains(`likedNone`)) {
+// 				heartIconOff.classList.add(`likedNone`);
+// 				heartIconOff.classList.remove(`likeOff`);
+// 				heartIconOn.classList.remove(`likeOn`);
+// 				heartIconOn.classList.remove(`likedNone`);
+// 				heartIconOn.classList.add(`likeOff`);
+// 				currentLikes += 1;
+// 				totalLikes += 1;
+				
+// 				likesElement.innerText = currentLikes;
+// 				nberTotalOfLikeCounter.innerText = totalLikes;
+
+// 				localStorage.setItem(photographerLikesKey, totalLikes)
+// 				localStorage.setItem(mediaLikeStatusKey, 'true');
+// 			}
+			
+// 		});
+
+// 		heartIconOn.addEventListener(`click`, () => {
+// 			if (heartIconOn.classList.contains(`likeOff`)) {
+// 				heartIconOn.classList.remove(`likeOff`);
+// 				heartIconOn.classList.add(`likedNone`);
+// 				heartIconOff.classList.remove(`likedNone`);
+// 				heartIconOff.classList.add(`likeOff`);
+			
+// 				currentLikes -= 1;
+// 				totalLikes -= 1;
+				
+// 				likesElement.innerText = currentLikes;
+// 				nberTotalOfLikeCounter.innerText = totalLikes;
+
+// 				localStorage.setItem(photographerLikesKey, totalLikes)
+// 				localStorage.setItem(mediaLikeStatusKey, 'false');
+// 			}
+				
+// 		});
+		
+// 		heartIconOff.addEventListener(`keydown`, (event) => {
+// 			if(event.key === `Enter`){
+				
+// 				if (!heartIconOff.classList.contains(`likedNone`)) {
+// 					heartIconOff.classList.add(`likedNone`);
+// 					heartIconOff.classList.remove(`likeOff`);
+// 					heartIconOn.classList.remove(`likeOn`);
+// 					heartIconOn.classList.remove(`likedNone`);
+// 					heartIconOn.classList.add(`likeOff`);
+// 					currentLikes += 1;
+// 					totalLikes += 1;
+					
+// 					likesElement.innerText = currentLikes;
+// 					nberTotalOfLikeCounter.innerText = totalLikes;
+// 					localStorage.setItem(photographerLikesKey, totalLikes)
+// 					localStorage.setItem(mediaLikeStatusKey, 'true');
+// 				}
+// 			}
+// 		});
+
+// 		heartIconOn.addEventListener(`keydown`, (event) => {
+// 			if (event.key === `Enter`){
+// 				if (heartIconOn.classList.contains(`likeOff`)) {
+// 					heartIconOn.classList.remove(`likeOff`);
+// 					heartIconOn.classList.add(`likedNone`);
+// 					heartIconOff.classList.remove(`likedNone`);
+// 					heartIconOff.classList.add(`likeOff`);
+				
+// 					currentLikes -= 1;
+// 					totalLikes -= 1;
+					
+// 					likesElement.innerText = currentLikes;
+// 					nberTotalOfLikeCounter.innerText = totalLikes;
+
+// 					localStorage.setItem(photographerLikesKey, totalLikes)
+// 					localStorage.setItem(mediaLikeStatusKey, 'false');
+// 				}
+// 			}
+// 		});
+			
+// 	});
+
+		// }
 		heartIconOff.addEventListener(`click`, () => {
-			if (!heartIconOff.classList.contains(`likedNone`)) {
-				heartIconOff.classList.add(`likedNone`);
-				heartIconOff.classList.remove(`likeOff`);
-				heartIconOn.classList.remove(`likeOn`);
-				heartIconOn.classList.remove(`likedNone`);
-				heartIconOn.classList.add(`likeOff`);
+			if (heartIconOff.style.display !== 'none') {
+				heartIconOff.style.display = 'none';
+				heartIconOn.style.display = 'block';
 				currentLikes += 1;
 				totalLikes += 1;
 				
 				likesElement.innerText = currentLikes;
 				nberTotalOfLikeCounter.innerText = totalLikes;
+
+				// Save to localStorage
+				localStorage.setItem(photographerLikesKey, totalLikes);
+				localStorage.setItem(mediaLikeStatusKey, 'true');
 			}
-			
 		});
 
+		// Event listener for unliking
 		heartIconOn.addEventListener(`click`, () => {
-			if (heartIconOn.classList.contains(`likeOff`)) {
-				heartIconOn.classList.remove(`likeOff`);
-				heartIconOn.classList.add(`likedNone`);
-				heartIconOff.classList.remove(`likedNone`);
-				heartIconOff.classList.add(`likeOff`);
-			
+			if (heartIconOn.style.display !== 'none') {
+				heartIconOn.style.display = 'none';
+				heartIconOff.style.display = 'block';
 				currentLikes -= 1;
 				totalLikes -= 1;
 				
 				likesElement.innerText = currentLikes;
 				nberTotalOfLikeCounter.innerText = totalLikes;
+
+				// Save to localStorage
+				localStorage.setItem(photographerLikesKey, totalLikes);
+				localStorage.setItem(mediaLikeStatusKey, 'false');
 			}
-				
 		});
-		
+	});
+
+	// Add event listeners for keyboard interactions
+	heartLikeOff.forEach((heartIconOff, index) => {
+		const heartIconOn = heartLikeOn[index];
+		let likesElement = heartIconOff.previousElementSibling;
+		let currentLikes = parseInt(likesElement.innerText);
+
+		const mediaId = heartIconOff.getAttribute('data-media-id');
+		const mediaLikeStatusKey = `likeStatus_${mediaId}`;
+
 		heartIconOff.addEventListener(`keydown`, (event) => {
 			if(event.key === `Enter`){
-				
-				if (!heartIconOff.classList.contains(`likedNone`)) {
-					heartIconOff.classList.add(`likedNone`);
-					heartIconOff.classList.remove(`likeOff`);
-					heartIconOn.classList.remove(`likeOn`);
-					heartIconOn.classList.remove(`likedNone`);
-					heartIconOn.classList.add(`likeOff`);
+				if (heartIconOff.style.display !== 'none') {
+					heartIconOff.style.display = 'none';
+					heartIconOn.style.display = 'block';
 					currentLikes += 1;
 					totalLikes += 1;
 					
 					likesElement.innerText = currentLikes;
 					nberTotalOfLikeCounter.innerText = totalLikes;
+
+					// Save to localStorage
+					localStorage.setItem(photographerLikesKey, totalLikes);
+					localStorage.setItem(mediaLikeStatusKey, 'true');
 				}
 			}
 		});
 
 		heartIconOn.addEventListener(`keydown`, (event) => {
 			if (event.key === `Enter`){
-				if (heartIconOn.classList.contains(`likeOff`)) {
-					heartIconOn.classList.remove(`likeOff`);
-					heartIconOn.classList.add(`likedNone`);
-					heartIconOff.classList.remove(`likedNone`);
-					heartIconOff.classList.add(`likeOff`);
-				
+				if (heartIconOn.style.display !== 'none') {
+					heartIconOn.style.display = 'none';
+					heartIconOff.style.display = 'block';
 					currentLikes -= 1;
 					totalLikes -= 1;
 					
 					likesElement.innerText = currentLikes;
 					nberTotalOfLikeCounter.innerText = totalLikes;
-				}
-			}	
-		});
-			
-	});
 
+					// Save to localStorage
+					localStorage.setItem(photographerLikesKey, totalLikes);
+					localStorage.setItem(mediaLikeStatusKey, 'false');
+				}
+			}
+		});
+	});
 }
 
 //-----------------------------------------------------------------------//

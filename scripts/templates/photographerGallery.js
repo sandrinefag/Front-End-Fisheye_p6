@@ -46,7 +46,20 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 	const photosGallery = document.querySelector(`.photographerWorks`);
 	photosGallery.innerHTML = "";
 
+	const photographerLikesKey = `totalLikes_${photographer.name}`
+
 	let totalLikes = 0;
+	let storedTotalLikes = localStorage.getItem(photographerLikesKey)
+
+	if (storedTotalLikes !== null) {
+		totalLikes = parseInt(storedTotalLikes)
+	} else { 
+		mediasPhoto.forEach((media) => {
+			totalLikes += parseInt(media.likes)
+		})
+
+		localStorage.setItem(photographerLikesKey, totalLikes)
+	}
 
 	if (mediasPhoto.length > 0) {
 		const iconLikeOffPath = `./assets/icons/heart.png`;
@@ -105,7 +118,8 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 			const likeDiv = document.createElement(`div`);
 			likeDiv.classList.add(`likeDiv`);
 
-			totalLikes += parseInt(nberOfPhotoLike.innerText);
+
+			// totalLikes += parseInt(nberOfPhotoLike.innerText);
 
 			photosGallery.appendChild(photosDiv);
 			photosDiv.appendChild(mediaElement);
@@ -125,7 +139,9 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 			addKeydownEvent(mediaElement, media, photographer);
 		});
 
-	nberTotalOfLikeCounter.innerText = totalLikes;
+		nberTotalOfLikeCounter.innerText = totalLikes;
+		localStorage.setItem(photographerLikesKey, totalLikes)
+		like(photographerLikesKey)
 		
 	}
 	
