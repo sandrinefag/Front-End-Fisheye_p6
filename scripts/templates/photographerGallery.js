@@ -104,15 +104,19 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 			nberOfPhotoLike.classList.add(`nberOfLike`);
 			nberOfPhotoLike.setAttribute(`tabindex`, `0`);
 
+			const mediaId = media.id;
+			console.log(mediaId)
 			const iconLikeOff = document.createElement(`img`);
 			iconLikeOff.setAttribute(`src`, iconLikeOffPath);
 			iconLikeOff.classList.add(`likeOff`);
+			iconLikeOff.setAttribute('data-media-id', mediaId);
 			iconLikeOff.setAttribute(`tabindex`, `0`);
 			iconLikeOff.setAttribute(`aria-label`, `icone pour like`);
 
 			const iconLikeOn = document.createElement(`img`);
 			iconLikeOn.setAttribute(`src`, iconLikeOnPath);
 			iconLikeOn.classList.add(`likeOn`);
+			iconLikeOn.setAttribute('data-media-id', mediaId);
 			iconLikeOn.setAttribute(`alt`, `photo ajouté au like`);
 
 			const likeDiv = document.createElement(`div`);

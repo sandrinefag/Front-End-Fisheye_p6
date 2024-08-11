@@ -113,7 +113,7 @@ select {
 	display: none;
 }
 
-.likeOn {
+/* .likeOn {
 	display: none;
 	width: 74%;
 	height: 20px;
@@ -125,7 +125,7 @@ select {
 	height: 20px;
 	padding-top: 28px;
 	cursor: pointer;
-}
+} */
 
 .nberOfLike {
 	color: rgba(144, 28, 28, 1);
