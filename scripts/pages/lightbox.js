@@ -29,42 +29,51 @@ function trapFocus(element) {
 		}
 	});
 
-	firstFocusableElement.focus();
+	firstFocusableElement.focus()
 }
 
 //--------------------------------------------------------------------------------------------//
+let currentIndex = 0
+let currentMediasPhoto = []
+let currentPhotographer = {};
+	
+export function displayMediaInLightBox(media, photographer, mediasPhoto) {
+	
+	currentPhotographer = photographer
+	currentMediasPhoto = mediasPhoto
+	currentIndex = mediasPhoto.findIndex(medias => medias.id === media.id)
 
-export function displayMediaInLightBox(media, photographer) {
 	const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
-	lightbox.style.display = `flex`;
+	lightbox.style.display = `flex`
 	lightbox.focus()
 	if (media.image) {
 		lightboxImg.src = photographerWorksPath;
-		lightboxImg.style.display = `block`;
-		lightboxVideo.style.display = `none`;
+		lightboxImg.style.display = `block`
+		lightboxVideo.style.display = `none`
 	} else {
-		lightboxImg.style.display = `none`;
-		lightboxVideo.style.display = `block`;
-		lightboxVideo.src = photographerWorksPath;
+		lightboxImg.style.display = `none`
+		lightboxVideo.style.display = `block`
+		lightboxVideo.src = photographerWorksPath
 	}
-	lightboxTitlePhoto.innerText = `${media.title}`;
+	lightboxTitlePhoto.innerText = `${media.title}`
 	
 }
 
 //----------------------------------------------------------------------------------------//
 
 export function lightboxBtnControls(mediasPhoto, photographer) {
-	let currentIndex = 0;
+	 currentMediasPhoto = mediasPhoto;
+	
 	trapFocus(lightbox)
 
 	nextBtn.addEventListener(`click`, () => {
 		currentIndex = (currentIndex + 1) % mediasPhoto.length;
-		displayMediaInLightBox(mediasPhoto[currentIndex], photographer);
+		displayMediaInLightBox(mediasPhoto[currentIndex], photographer, mediasPhoto);
 	});
 
 	prevBtn.addEventListener(`click`, () => {
 		currentIndex = (currentIndex - 1 + mediasPhoto.length) % mediasPhoto.length;
-		displayMediaInLightBox(mediasPhoto[currentIndex], photographer);
+		displayMediaInLightBox(mediasPhoto[currentIndex], photographer, mediasPhoto);
 	});
 
 	closeBtn.addEventListener(`click`, () => {
@@ -75,10 +84,10 @@ export function lightboxBtnControls(mediasPhoto, photographer) {
 		const key = event.key; 
 		if (key === `ArrowLeft`) {
 			currentIndex = (currentIndex - 1 + mediasPhoto.length) % mediasPhoto.length;
-			displayMediaInLightBox(mediasPhoto[currentIndex], photographer);
+			displayMediaInLightBox(mediasPhoto[currentIndex], photographer, mediasPhoto);
 		} else if (key === `ArrowRight`) {
 			currentIndex = (currentIndex + 1) % mediasPhoto.length;
-			displayMediaInLightBox(mediasPhoto[currentIndex], photographer);
+			displayMediaInLightBox(mediasPhoto[currentIndex], photographer, mediasPhoto);
 		} else if (key === `Escape`) {
 			lightbox.style.display = `none`;
 		}

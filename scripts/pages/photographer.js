@@ -91,25 +91,20 @@ function sortByPopularity(mediasPhoto) {
 }
 
 function sortByDate(mediasPhoto) {
-	const sortedMedias = mediasPhoto
-		.slice()
-		.sort((a, b) => new Date(b.date) - new Date(a.date));
+	const sortedMedias = mediasPhoto.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
 	displayPhotographerWorks(photographer, sortedMedias);
 	like();
 	return sortedMedias;
 }
 
 function sortByTitle(mediasPhoto) {
-	const sortedMedias = mediasPhoto
-		.slice()
-		.sort((a, b) => a.title.localeCompare(b.title));
+	const sortedMedias = mediasPhoto.slice().sort((a, b) => a.title.localeCompare(b.title));
 	displayPhotographerWorks(photographer, sortedMedias);
 	like();
 	return sortedMedias;
 }
 
 //--------------------------------------------------------------------------//
-	// const photographerLikesKey = `totalLikes_${photographerLikesKey}`
 export function like(photographerLikesKey) {
 	const heartLikeOff = document.querySelectorAll(`.likeOff`);
 	const heartLikeOn = document.querySelectorAll(`.likeOn`);
@@ -127,7 +122,7 @@ export function like(photographerLikesKey) {
 		const mediaId = heartIconOff.getAttribute('data-media-id');
 		const mediaLikeStatusKey = `likeStatus_${mediaId}`;
 		const mediaLikesKey = `mediaLikes_${mediaId}`;
-		console.log(mediaId)
+		
 		// Check if this media item was previously liked
 		const isLiked = localStorage.getItem(mediaLikeStatusKey) === 'true';
 		const storedLikes = localStorage.getItem(mediaLikesKey);
@@ -155,14 +150,14 @@ export function like(photographerLikesKey) {
 				likesElement.innerText = currentLikes;
 				nberTotalOfLikeCounter.innerText = totalLikes;
 
-				// Save to localStorage
+				
 				localStorage.setItem(photographerLikesKey, totalLikes);
 				localStorage.setItem(mediaLikeStatusKey, 'true');
 				localStorage.setItem(mediaLikesKey, currentLikes);
 			}
 		});
 
-		// Event listener for unliking
+	
 		heartIconOn.addEventListener(`click`, () => {
 			if (heartIconOn.style.display !== 'none') {
 				heartIconOn.style.display = 'none';
@@ -173,7 +168,7 @@ export function like(photographerLikesKey) {
 				likesElement.innerText = currentLikes;
 				nberTotalOfLikeCounter.innerText = totalLikes;
 
-				// Save to localStorage
+		
 				localStorage.setItem(photographerLikesKey, totalLikes);
 				localStorage.setItem(mediaLikeStatusKey, 'false');
 				localStorage.setItem(mediaLikesKey, currentLikes);
@@ -181,7 +176,7 @@ export function like(photographerLikesKey) {
 		});
 	});
 
-	// Add event listeners for keyboard interactions
+
 	heartLikeOff.forEach((heartIconOff, index) => {
 		const heartIconOn = heartLikeOn[index];
 		let likesElement = heartIconOff.previousElementSibling;
@@ -189,11 +184,10 @@ export function like(photographerLikesKey) {
 
 		const mediaId = heartIconOff.getAttribute('data-media-id');
 		const mediaLikeStatusKey = `likeStatus_${mediaId}`;
-		console.log(mediaId)
-		console.log(mediaLikeStatusKey)
-
+		const mediaLikesKey = `mediaLikes_${mediaId}`;
 		heartIconOff.addEventListener(`keydown`, (event) => {
-			if(event.key === `Enter`){
+			if (event.key === `Enter`) {
+				event.preventDefault()
 				if (heartIconOff.style.display !== 'none') {
 					heartIconOff.style.display = 'none';
 					heartIconOn.style.display = 'block';
@@ -203,16 +197,19 @@ export function like(photographerLikesKey) {
 					likesElement.innerText = currentLikes;
 					nberTotalOfLikeCounter.innerText = totalLikes;
 
-					// Save to localStorage
+					
 					localStorage.setItem(photographerLikesKey, totalLikes);
 					localStorage.setItem(mediaLikeStatusKey, 'true');
 					localStorage.setItem(mediaLikesKey, currentLikes);
+
+					heartIconOn.focus()
 				}
 			}
 		});
 
 		heartIconOn.addEventListener(`keydown`, (event) => {
-			if (event.key === `Enter`){
+			if (event.key === `Enter`) {
+				event.preventDefault()
 				if (heartIconOn.style.display !== 'none') {
 					heartIconOn.style.display = 'none';
 					heartIconOff.style.display = 'block';
@@ -226,6 +223,8 @@ export function like(photographerLikesKey) {
 					localStorage.setItem(photographerLikesKey, totalLikes);
 					localStorage.setItem(mediaLikeStatusKey, 'false');
 					localStorage.setItem(mediaLikesKey, currentLikes);
+
+					heartIconOff.focus()
 				}
 			}
 		});
@@ -238,7 +237,8 @@ export function addKeydownEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`keydown`, (event) => {
 		const key = event.key;
 		if (key === `Enter`) {
-			displayMediaInLightBox(media, photographer);
+			event.preventDefault()
+			displayMediaInLightBox(media, photographer, mediasPhoto);
 			like()
 
 		}
@@ -249,7 +249,7 @@ export function addKeydownEvent(mediaElement, media, photographer) {
 
 export function addClickEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`click`, () => {
-		displayMediaInLightBox(media, photographer);
+		displayMediaInLightBox(media, photographer, mediasPhoto);
 		like();
 	});
 }

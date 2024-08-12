@@ -105,7 +105,7 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 			nberOfPhotoLike.setAttribute(`tabindex`, `0`);
 
 			const mediaId = media.id;
-			console.log(mediaId)
+	
 			const iconLikeOff = document.createElement(`img`);
 			iconLikeOff.setAttribute(`src`, iconLikeOffPath);
 			iconLikeOff.classList.add(`likeOff`);
@@ -122,8 +122,6 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 			const likeDiv = document.createElement(`div`);
 			likeDiv.classList.add(`likeDiv`);
 
-
-			// totalLikes += parseInt(nberOfPhotoLike.innerText);
 
 			photosGallery.appendChild(photosDiv);
 			photosDiv.appendChild(mediaElement);
