@@ -118,7 +118,6 @@ function trapFocus(event) {
 
 	msgArea.addEventListener(`change`, (event) => {
 		const userInput = event.target.value;
-		console.log(`message: ${userInput}`);
 		const msgLenghtIsItValid = checkMessageLength(userInput);
 		if (msgLenghtIsItValid) {
 			msgArea.style.background = "green";
@@ -138,15 +137,8 @@ function trapFocus(event) {
 		const isValidMsg = checkMessageLength(msgArea.value);
 
 		if (isValidFirstName && isValidLastName && isValidMail && isValidMsg) {
-			console.log("Formulaire valide");
-			console.log("Prénom:", firstNameInput.value);
-			console.log("Nom:", lastNameInput.value);
-			console.log("Mail:", mailInput.value);
-			console.log("Message:", msgArea.value);
 			lastNameInput.style.background = "green";
 			lastNameInput.style.color = "white";
-		} else {
-			console.log("Formulaire invalide");
 		}
 	}
 

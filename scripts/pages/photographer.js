@@ -5,6 +5,8 @@ import { lightboxBtnControls, displayMediaInLightBox } from "./lightbox.js";
 let mediasPhoto = [];
 let photographer = "";
 const lightbox = document.querySelector(`.lightbox`);
+let currentIndex = 0
+let currentMediasPhoto = []
 
 async function loadPhotographerData() {
 	try {
@@ -16,7 +18,8 @@ async function loadPhotographerData() {
 
 		displayPhotographerInfos(photographer);
 		displayPhotographerWorks(photographer, mediasPhoto);
-		lightboxBtnControls(mediasPhoto, photographer);
+		currentMediasPhoto = mediasPhoto
+		lightboxBtnControls(imagesToDisplay, photographer);
 		photographerNameModal(photographer);
 		gallerySort();
 		like();
@@ -49,6 +52,7 @@ async function fetchPhotographerById(photographerId) {
 }
 //------------------------------------------------------------------
 
+
 function gallerySort() {
 	document.querySelector(`#sortWorks`).addEventListener(`change`, function () {
 		const sortValue = this.value;
@@ -69,11 +73,21 @@ function gallerySort() {
 			default:
 				sortedMedias = mediasPhoto;
 		}
-		displayPhotographerWorks(photographer, sortedMedias);
+
+		imagesToDisplay = sortedMedias
+		currentMediasPhoto = sortedMedias
+		currentIndex = 0
+		displayPhotographerWorks(photographer, imagesToDisplay);
 		like();
+
+	
+		lightboxBtnControls(imagesToDisplay, photographer)
+		
 	});
 }
 gallerySort();
+
+
 
 //---------------------------------------------------------
 
@@ -84,25 +98,26 @@ function getPhotographerIdFromURL() {
 //----------------------------------------------------------------
 
 function sortByPopularity(mediasPhoto) {
-	const sortedMedias = mediasPhoto.slice().sort((a, b) => b.likes - a.likes);
-	displayPhotographerWorks(photographer, sortedMedias);
-	like();
-	return sortedMedias;
+	imagesToDisplay = mediasPhoto.slice().sort((a, b) => b.likes - a.likes);
+	mediasPhoto = imagesToDisplay;
+	return imagesToDisplay;
 }
 
 function sortByDate(mediasPhoto) {
-	const sortedMedias = mediasPhoto.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
-	displayPhotographerWorks(photographer, sortedMedias);
-	like();
-	return sortedMedias;
+	imagesToDisplay = mediasPhoto.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+	mediasPhoto = imagesToDisplay;
+	return imagesToDisplay;
+	
 }
 
 function sortByTitle(mediasPhoto) {
-	const sortedMedias = mediasPhoto.slice().sort((a, b) => a.title.localeCompare(b.title));
-	displayPhotographerWorks(photographer, sortedMedias);
-	like();
-	return sortedMedias;
+	imagesToDisplay = mediasPhoto.slice().sort((a, b) => a.title.localeCompare(b.title));
+	mediasPhoto = imagesToDisplay;
+	return imagesToDisplay;
 }
+
+let imagesToDisplay = [];
+
 
 //--------------------------------------------------------------------------//
 export function like(photographerLikesKey) {
@@ -123,7 +138,7 @@ export function like(photographerLikesKey) {
 		const mediaLikeStatusKey = `likeStatus_${mediaId}`;
 		const mediaLikesKey = `mediaLikes_${mediaId}`;
 		
-		// Check if this media item was previously liked
+		
 		const isLiked = localStorage.getItem(mediaLikeStatusKey) === 'true';
 		const storedLikes = localStorage.getItem(mediaLikesKey);
 
@@ -237,8 +252,9 @@ export function addKeydownEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`keydown`, (event) => {
 		const key = event.key;
 		if (key === `Enter`) {
+			console.log('mediaphotos:', mediasPhoto)
 			event.preventDefault()
-			displayMediaInLightBox(media, photographer, mediasPhoto);
+			displayMediaInLightBox(media, photographer, currentMediasPhoto);
 			like()
 
 		}
@@ -249,7 +265,8 @@ export function addKeydownEvent(mediaElement, media, photographer) {
 
 export function addClickEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`click`, () => {
-		displayMediaInLightBox(media, photographer, mediasPhoto);
+		console.log('mediaphotos:', mediasPhoto)
+		displayMediaInLightBox(media, photographer, currentMediasPhoto);
 		like();
 	});
 }
