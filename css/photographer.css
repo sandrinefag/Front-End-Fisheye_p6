@@ -261,6 +261,7 @@ select {
 	background-color: #901c1c;
 	border-radius: 5px;
 	cursor: pointer;
+	margin-top: 20px;
 }
 
 .contact_button:hover,
@@ -303,24 +304,25 @@ select {
 	flex-direction: column-reverse;
 	/* font-weight: 600; */
 	line-height: 0;
-	/* margin-top: 100px;
-	padding-top: 141px;
-	font-size: 64px; */
+	/* margin-top: 100px;*/
+	padding-top: 30px;
+	/* font-size: 64px; */
 }
 
 .modalHeader img {
 	cursor: pointer;
-	width: 72px;
+	width: 56px;
+	margin-top: -107px;
 }
 
 .modalContactPhotographerName {
-	font-size: 76px;
+	font-size: 60px;
 	margin-top: 28px;
 	height: 56px;
 	font-weight: 500;
 }
 .modalHeader h2 {
-	font-size: 76px;
+	font-size: 60px;
 	/* margin-top: -48px; */
 	color: #000;
 }
