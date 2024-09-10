@@ -278,14 +278,15 @@ select {
 	width: 46%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	/* align-items: center; */
 	justify-content: space-between;
 	padding: 35px;
 	margin: auto;
-	margin-top: 10px;
+	margin-top: 26px;
 	position: absolute;
 	inset: 0;
 	z-index: 0;
+	height: fit-content;
 }
 
 .modalHeader {
@@ -293,16 +294,18 @@ select {
 	width: 100%;
 	display: flex;
 	flex-direction: row-reverse;
+	margin-top: -15px;
+	height: 183px;
 }
 
 .modalHeader div {
 	display: flex;
 	flex-direction: column-reverse;
-	font-weight: 600;
+	/* font-weight: 600; */
 	line-height: 0;
-	margin-top: 100px;
+	/* margin-top: 100px;
 	padding-top: 141px;
-	font-size: 64px;
+	font-size: 64px; */
 }
 
 .modalHeader img {
@@ -318,15 +321,15 @@ select {
 }
 .modalHeader h2 {
 	font-size: 76px;
-	margin-top: -48px;
+	/* margin-top: -48px; */
 	color: #000;
 }
 
 form {
 	display: flex;
-	width: 100%;
+	/* width: 100%; */
 	flex-direction: column;
-	align-items: flex-start;
+	/* align-items: flex-start; */
 }
 
 form label {
@@ -335,11 +338,11 @@ form label {
 }
 
 form div {
-	display: flex;
-	flex-direction: column;
+	/* display: flex;
+	flex-direction: column; */
 	width: 100%;
-	align-items: self-start;
-	margin-bottom: 47px;
+	/* align-items: self-start;
+	margin-bottom: 47px; */
 }
 
 form input {
