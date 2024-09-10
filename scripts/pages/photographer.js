@@ -252,7 +252,6 @@ export function addKeydownEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`keydown`, (event) => {
 		const key = event.key;
 		if (key === `Enter`) {
-			console.log('mediaphotos:', mediasPhoto)
 			event.preventDefault()
 			displayMediaInLightBox(media, photographer, currentMediasPhoto);
 			like()
@@ -265,7 +264,6 @@ export function addKeydownEvent(mediaElement, media, photographer) {
 
 export function addClickEvent(mediaElement, media, photographer) {
 	mediaElement.addEventListener(`click`, () => {
-		console.log('mediaphotos:', mediasPhoto)
 		displayMediaInLightBox(media, photographer, currentMediasPhoto);
 		like();
 	});

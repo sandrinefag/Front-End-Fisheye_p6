@@ -38,12 +38,9 @@ let currentMediasPhoto = [];
 let currentPhotographer = {};
 	
 export function displayMediaInLightBox(media, photographer, mediasPhoto) {
-	console.log('id:', media)
 	currentIndex = mediasPhoto.findIndex(medias => medias.id === media.id)
-	console.log(mediasPhoto)
 	currentPhotographer = photographer
 	currentMediasPhoto = mediasPhoto
-	console.log(currentIndex)
 	
 
 	const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
@@ -64,39 +61,49 @@ export function displayMediaInLightBox(media, photographer, mediasPhoto) {
 
 //----------------------------------------------------------------------------------------//
 
-export function lightboxBtnControls( mediasPhoto, photographer) {
-	currentMediasPhoto = mediasPhoto;
-	currentPhotographer = photographer
-	
-	trapFocus(lightbox)
 
+let eventListenersAttached = false;
 
-	nextBtn.addEventListener(`click`, () => {
-		currentIndex = (currentIndex + 1) % currentMediasPhoto.length;
-		
-		displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
-	});
+export function lightboxBtnControls(mediasPhoto, photographer) {
+    currentMediasPhoto = mediasPhoto;
+    currentPhotographer = photographer;
+    
+    trapFocus(lightbox);
 
-	prevBtn.addEventListener(`click`, () => {
-		currentIndex = (currentIndex - 1 + currentMediasPhoto.length) % currentMediasPhoto.length;
-		displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
-	});
+    // Attache les événements une seule fois
+    if (!eventListenersAttached) {
+        nextBtn.addEventListener('click', handleNextClick);
+        prevBtn.addEventListener('click', handlePrevClick);
+        document.addEventListener('keydown', handleKeyDown);
+        closeBtn.addEventListener('click', closeLightbox);
+        eventListenersAttached = true;
+    }
+}
 
-	closeBtn.addEventListener(`click`, () => {
-		lightbox.style.display = `none`;
-	});
+function handleNextClick() {
+    currentIndex = (currentIndex + 1) % currentMediasPhoto.length;
+    console.log('Index actuel après clic sur "suivant" :', currentIndex);
+    displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
+}
 
-	document.addEventListener(`keydown`, (event) => {
-		const key = event.key; 
-		if (key === `ArrowLeft`) {
-			currentIndex = (currentIndex - 1 + currentMediasPhoto.length) % currentMediasPhoto.length;
-			displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
-		} else if (key === `ArrowRight`) {
-			currentIndex = (currentIndex + 1) % currentMediasPhoto.length;
-			displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
-		} else if (key === `Escape`) {
-			lightbox.style.display = `none`;
-		}
-		
-	});
+function handlePrevClick() {
+    currentIndex = (currentIndex - 1 + currentMediasPhoto.length) % currentMediasPhoto.length;
+    displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
+}
+
+function handleKeyDown(event) {
+    const key = event.key;
+    if (key === 'ArrowLeft') {
+        currentIndex = (currentIndex - 1 + currentMediasPhoto.length) % currentMediasPhoto.length;
+        displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
+    } else if (key === 'ArrowRight') {
+        currentIndex = (currentIndex + 1) % currentMediasPhoto.length;
+        displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
+    } else if (key === 'Escape') {
+        lightbox.style.display = 'none';
+    }
+}
+
+function closeLightbox() {
+    lightbox.style.display = 'none';
 }
