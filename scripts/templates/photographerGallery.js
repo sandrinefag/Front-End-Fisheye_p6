@@ -1,3 +1,4 @@
+import { MediaFactory} from "./mediaFactory.js";
 import { addKeydownEvent, addClickEvent, like } from "../pages/photographer.js";
 
 // Fonction pour afficher les informations du photographe
@@ -82,15 +83,18 @@ export function displayPhotographerWorks(photographer, mediasPhoto) {
 		pricePerDay.innerText = `${photographer.price}€/jour`;
 
 		mediasPhoto.forEach((media) => {
-			const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
+			// const photographerWorksPath = media.image ? `assets/images/${photographer.name}-photos/${media.image}` : `assets/images/${photographer.name}-photos/${media.video}`;
 			const photosDiv = document.createElement(`div`);
 			photosDiv.classList.add(`media-container`);
 
-			const mediaElement = media.image ? document.createElement(`img`) : document.createElement(`video`);
-			mediaElement.classList.add(`photographers-works`);
-			mediaElement.setAttribute(`src`, photographerWorksPath);
-			mediaElement.setAttribute(`tabindex`, `0`);
-			mediaElement.setAttribute(`aria-label`, ` ${media.title} Cliquez pour une vue rapprochée`);
+			const mediaElement = MediaFactory.createMediaElement(media, photographer.name);
+
+
+			// const mediaElement = media.image ? document.createElement(`img`) : document.createElement(`video`);
+			// mediaElement.classList.add(`photographers-works`);
+			// mediaElement.setAttribute(`src`, photographerWorksPath);
+			// mediaElement.setAttribute(`tabindex`, `0`);
+			// mediaElement.setAttribute(`aria-label`, ` ${media.title} Cliquez pour une vue rapprochée`);
 
 			const photoDetailsDiv = document.createElement(`div`);
 			photoDetailsDiv.classList.add(`photoDetailsDiv`);
