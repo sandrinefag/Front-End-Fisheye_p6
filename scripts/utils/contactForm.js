@@ -1,10 +1,6 @@
 document.addEventListener(`DOMContentLoaded`, function () {
 	const modal = document.getElementById(`contact_modal`);
-	const firstNameInput = document.getElementById(`firstNameInput`);
-	const lastNameInput = document.getElementById(`lastNameInput`);
-	const mailInput = document.getElementById(`mailInput`);
-	const msgArea = document.getElementById(`msgArea`);
-	const sendFormBtn = document.getElementById(`sendFormBtn`);
+	
 	const focusElementsSelector = `button, input, textarea, .modalHeader img`;
 	const closeModalBtn = document.querySelector(`.modalHeader img`);
 
@@ -47,6 +43,8 @@ document.addEventListener(`DOMContentLoaded`, function () {
 
 	closeModalBtn.addEventListener('keydown', (event) => {
 		if (event.key === 'Enter') {
+			window.closeModal();
+		} else if (event.key === 'Escape') {
 			window.closeModal();
 		}
 	});
