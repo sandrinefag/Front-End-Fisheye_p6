@@ -1,3 +1,9 @@
+const firstNameInput = document.getElementById(`firstNameInput`)
+const lastNameInput = document.getElementById(`lastNameInput`)
+const mailInput = document.getElementById(`mailInput`)
+const msgArea = document.getElementById(`msgArea`)
+const sendFormBtn = document.getElementById(`sendFormBtn`)
+
 document.addEventListener(`DOMContentLoaded`, function () {
 	const modal = document.getElementById(`contact_modal`);
 	
@@ -60,7 +66,7 @@ document.addEventListener(`DOMContentLoaded`, function () {
 	}
 
 	function checkedUserMail(userMail) {
-		let regexMail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/;
+		let regexMail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,6}$/;
 		return regexMail.test(userMail);
 	}
 

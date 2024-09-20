@@ -4,8 +4,6 @@ import { lightboxBtnControls, displayMediaInLightBox } from "./lightbox.js";
 
 let mediasPhoto = [];
 let photographer = "";
-const lightbox = document.querySelector(`.lightbox`);
-let currentIndex = 0
 let currentMediasPhoto = []
 
 async function loadPhotographerData() {
@@ -39,7 +37,7 @@ async function fetchPhotographerById(photographerId) {
 	try {
 		const response = await fetch(`./data/photographers.json`);
 		const data = await response.json();
-		// Trouver le photographe correspondant à l'ID
+		
 		const photographer = data.photographers.find((photograph) => photograph.id == photographerId);
 		const mediasPhoto = data.media.filter((works) => works.photographerId == photographerId);
 		return { photographer, mediasPhoto };
@@ -76,7 +74,7 @@ function gallerySort() {
 
 		imagesToDisplay = sortedMedias
 		currentMediasPhoto = sortedMedias
-		currentIndex = 0
+	
 		displayPhotographerWorks(photographer, imagesToDisplay);
 		like();
 
