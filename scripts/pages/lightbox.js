@@ -82,7 +82,6 @@ export function lightboxBtnControls(mediasPhoto, photographer) {
 
 function handleNextClick() {
     currentIndex = (currentIndex + 1) % currentMediasPhoto.length;
-    console.log('Index actuel après clic sur "suivant" :', currentIndex);
     displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
 }
 
