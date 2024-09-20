@@ -1,4 +1,3 @@
-//Mettre le code JavaScript lié à la page photographer.html
 import { displayPhotographerInfos, displayPhotographerWorks, photographerNameModal } from "../templates/photographerGallery.js";
 import { lightboxBtnControls, displayMediaInLightBox } from "./lightbox.js";
 
