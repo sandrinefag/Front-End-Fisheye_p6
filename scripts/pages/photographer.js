@@ -166,6 +166,22 @@ export function like(photographerLikesKey) {
 				localStorage.setItem(photographerLikesKey, totalLikes);
 				localStorage.setItem(mediaLikeStatusKey, 'true');
 				localStorage.setItem(mediaLikesKey, currentLikes);
+
+				const mediaIndex = mediasPhoto.findIndex(media => media.id == mediaId);
+                if (mediaIndex !== -1) {
+                    mediasPhoto[mediaIndex].likes = currentLikes; // Met à jour le nombre de likes
+                } 
+				
+
+				if (document.querySelector('#sortWorks').value === 'popularity') {
+					const sortedMedias = sortByPopularity(mediasPhoto)
+					console.log(sortedMedias)
+					imagesToDisplay = sortedMedias
+				
+					displayPhotographerWorks(photographer, imagesToDisplay)
+					like()
+					lightboxBtnControls(imagesToDisplay, photographer)
+				}
 			}
 		});
 
@@ -184,6 +200,19 @@ export function like(photographerLikesKey) {
 				localStorage.setItem(photographerLikesKey, totalLikes);
 				localStorage.setItem(mediaLikeStatusKey, 'false');
 				localStorage.setItem(mediaLikesKey, currentLikes);
+
+				const mediaIndex = mediasPhoto.findIndex(media => media.id == mediaId);
+                if (mediaIndex !== -1) {
+                    mediasPhoto[mediaIndex].likes = currentLikes; // Met à jour le nombre de likes 
+                } 
+
+				if (document.querySelector('#sortWorks').value === 'popularity') {
+					const sortedMedias = sortByPopularity(currentMediasPhoto)
+					imagesToDisplay = sortedMedias
+					displayPhotographerWorks(photographer, imagesToDisplay)
+					like()
+					lightboxBtnControls(imagesToDisplay, photographer)
+				}
 			}
 		});
 	});
@@ -215,6 +244,19 @@ export function like(photographerLikesKey) {
 					localStorage.setItem(mediaLikesKey, currentLikes);
 
 					heartIconOn.focus()
+
+					const mediaIndex = mediasPhoto.findIndex(media => media.id == mediaId);
+                if (mediaIndex !== -1) {
+                    mediasPhoto[mediaIndex].likes = currentLikes; // Met à jour le nombre de likes 
+                } 
+
+					if (document.querySelector('#sortWorks').value === 'popularity') {
+						const sortedMedias = sortByPopularity(currentMediasPhoto)
+						imagesToDisplay = sortedMedias
+						displayPhotographerWorks(photographer, imagesToDisplay)
+						like()
+						lightboxBtnControls(imagesToDisplay, photographer)
+					}
 				}
 			}
 		});
@@ -237,6 +279,19 @@ export function like(photographerLikesKey) {
 					localStorage.setItem(mediaLikesKey, currentLikes);
 
 					heartIconOff.focus()
+
+					const mediaIndex = mediasPhoto.findIndex(media => media.id == mediaId);
+					if (mediaIndex !== -1) {
+						mediasPhoto[mediaIndex].likes = currentLikes; // Met à jour le nombre de likes 
+					} 
+
+					if (document.querySelector('#sortWorks').value === 'popularity') {
+						const sortedMedias = sortByPopularity(currentMediasPhoto)
+						imagesToDisplay = sortedMedias
+						displayPhotographerWorks(photographer, imagesToDisplay)
+						like()
+						lightboxBtnControls(imagesToDisplay, photographer)
+					}
 				}
 			}
 		});

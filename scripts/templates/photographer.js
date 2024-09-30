@@ -6,9 +6,9 @@ export function photographerTemplate(data) {
 
 	function getUserCardDOM() {
 	
-		const photographerPageLink = document.createElement("a");
+		const photographerPageLink = document.createElement(`a`);
 		photographerPageLink.setAttribute(`href`, `photographer.html?id=${id}`);
-		const article = document.createElement("article");
+		const article = document.createElement(`article`);
 
 		//division en 2 de l'article. 
 		
@@ -22,16 +22,16 @@ export function photographerTemplate(data) {
 		h2.textContent = name;
 
 		//2eme partie
-		const photographerInfo = document.createElement("div");
-		photographerInfo.classList.add("photographerInfo");
-		const photographerTown = document.createElement("p");
-		photographerTown.classList.add("photographerTown");
+		const photographerInfo = document.createElement(`div`);
+		photographerInfo.classList.add(`photographerInfo`);
+		const photographerTown = document.createElement(`p`);
+		photographerTown.classList.add(`photographerTown`);
 		photographerTown.textContent = `${city}, ${country}`;
-		const photographerTagLine = document.createElement("p");
-		photographerTagLine.classList.add("photographerSlogan");
+		const photographerTagLine = document.createElement(`p`);
+		photographerTagLine.classList.add(`photographerSlogan`);
 		photographerTagLine.textContent = tagline;
-		const photographerPrice = document.createElement("p");
-		photographerPrice.classList.add("photographerPrice");
+		const photographerPrice = document.createElement(`p`);
+		photographerPrice.classList.add(`photographerPrice`);
 		photographerPrice.textContent = `${price}€ /jours`;
 
 		article.appendChild(photographerPageLink);

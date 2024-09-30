@@ -91,7 +91,7 @@ function handlePrevClick() {
 }
 
 function handleKeyDown(event) {
-    const key = event.key;
+	const key = event.key;
     if (key === 'ArrowLeft') {
         currentIndex = (currentIndex - 1 + currentMediasPhoto.length) % currentMediasPhoto.length;
         displayMediaInLightBox(currentMediasPhoto[currentIndex], currentPhotographer, currentMediasPhoto);
