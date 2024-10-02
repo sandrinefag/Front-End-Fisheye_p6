@@ -79,6 +79,7 @@ document.addEventListener(`DOMContentLoaded`, function () {
 
 	firstNameInput.addEventListener(`change`, (event) => {
 		const userInput = event.target.value;
+		console.log(`Prénom: ${userInput}`)
 		const nameIsItValid = checkUserName(userInput);
 		if (nameIsItValid) {
 			firstNameInput.style.background = "green";
@@ -92,7 +93,7 @@ document.addEventListener(`DOMContentLoaded`, function () {
 	lastNameInput.addEventListener(`change`, (event) => {
 		const userInput = event.target.value;
 		const nameIsItValid = checkUserName(userInput);
-
+		console.log(`Nom: ${userInput}`)
 		if (nameIsItValid) {
 			lastNameInput.style.background = "green";
 			lastNameInput.style.color = "white";
@@ -104,6 +105,7 @@ document.addEventListener(`DOMContentLoaded`, function () {
 
 	mailInput.addEventListener(`change`, (event) => {
 		const userInput = event.target.value;
+		console.log(`Mail: ${userInput}`)
 		const mailIsItValid = checkedUserMail(userInput);
 
 		if (mailIsItValid) {
@@ -117,6 +119,7 @@ document.addEventListener(`DOMContentLoaded`, function () {
 
 	msgArea.addEventListener(`change`, (event) => {
 		const userInput = event.target.value;
+		console.log(`message: ${userInput}`)
 		const msgLenghtIsItValid = checkMessageLength(userInput);
 		if (msgLenghtIsItValid) {
 			msgArea.style.background = "green";

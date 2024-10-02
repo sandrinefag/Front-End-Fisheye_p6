@@ -115,13 +115,13 @@ select {
 
 .likeOn {
 	display: none;
-	width: 74%;
+	/* width: 74%; */
 	height: 20px;
 	padding-top: 28px;
 	cursor: pointer;
 }
 .likeOff {
-	width: 74%;
+	/* width: 74%; */
 	height: 20px;
 	padding-top: 29px;
 	cursor: pointer;
